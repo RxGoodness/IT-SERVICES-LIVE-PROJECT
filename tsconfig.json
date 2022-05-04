@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "commonjs",
+    "lib": [
+      "ES6",
+      "ES2017",
+      "ES2018",
+      "ES2019",
+      "ES2020",
+      "esnext.asynciterable"
+    ],
+    "strict": true,
+    "outDir": "./dist",
+    "rootDirs": ["src", "test"],
+    "moduleResolution": "node",
+    "removeComments": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "preserveConstEnums": true
+  },
+  "exclude": ["node_modules"]
+}
