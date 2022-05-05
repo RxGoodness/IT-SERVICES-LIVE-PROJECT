@@ -11,26 +11,24 @@ export const createProject = async (req: Request, res: Response) => {
     const data = await projectDb.create({ name, overview, editor });
     res.status(200).json(data);
   } catch (error) {
-    res.status(404).json({ message: "please input right details" });
+    res.status(404).json({ message: "Please input right details" });
   }
 };
 export const deleteProject = async (req: Request, res: Response) => {
   try {
     const idFromOwner = req.params.id;
-    console.log(idFromOwner);
+
     const data = await projectDb.deleteOne({ id: idFromOwner });
-    console.log(data);
-    res.status(200).json({ message: "successfully deleted" });
+    data.deletedCount
+      ? res.status(200).json({ message: "successfully deleted" })
+      : res.status(404).json({ message: "Already deleted" });
   } catch (error) {
-    res.status(404).json({ message: "please input right details" });
+    res.status(404).json({ message: "Please input right details" });
   }
 };
 export const updateProject = async (req: Request, res: Response) => {
   try {
     const idFromOwner = req.params.id;
-    console.log(idFromOwner);
-
-    // const updatebody = req.body
     const { name, overview, editor } = req.body;
     const data = await projectDb.findOneAndUpdate(
       { id: idFromOwner },
@@ -38,7 +36,7 @@ export const updateProject = async (req: Request, res: Response) => {
     );
     res.status(200).json({ data });
   } catch (error) {
-    res.status(404).json({ message: "please input right details" });
+    res.status(404).json({ message: "Please input right details" });
   }
 };
 
