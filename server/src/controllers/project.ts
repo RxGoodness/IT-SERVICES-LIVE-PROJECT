@@ -36,5 +36,3 @@ export const updateProject = async (req: Request, res: Response) => {
     res.status(404).json({ message: "Please input right details" });
   }
 };
-
-export default test;
