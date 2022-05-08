@@ -1,8 +1,18 @@
 import express from 'express';
-import test from '../controllers';
+import { viewProfile, editProfile } from '../controllers/index';
+import editProfileValidator from '../middlewares';
 const router = express.Router();
 
-/* GET home page. */
-router.get('/test', test);
+
+
+// VIEW PROFILE
+router.get('/view-profile/view', viewProfile);
+
+
+// EDIT PROFILE
+router.put('/edit-profile/edit', editProfileValidator, editProfile);
+
+
+
 
 export default router;
