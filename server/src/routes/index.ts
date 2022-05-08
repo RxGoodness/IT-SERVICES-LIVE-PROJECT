@@ -1,6 +1,6 @@
 import express from 'express';
 import { viewProfile, editProfile } from '../controllers/index';
-import editProfileValidator from '../middlewares';
+import editProfileValidator from '../middlewares/index';
 const router = express.Router();
 
 
