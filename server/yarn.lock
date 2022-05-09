@@ -1716,6 +1716,11 @@ expect@^27.5.1:
     jest-matcher-utils "^27.5.1"
     jest-message-util "^27.5.1"
 
+express-async-handler@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/express-async-handler/-/express-async-handler-1.2.0.tgz#ffc9896061d90f8d2e71a2d2b8668db5b0934391"
+  integrity sha512-rCSVtPXRmQSW8rmik/AIb2P0op6l7r1fMW538yyvTMltCO4xQEWMmobfrIxN2V1/mVrgxB8Az3reYF6yUZw37w==
+
 express-jwt@^7.4.3:
   version "7.6.2"
   resolved "https://registry.yarnpkg.com/express-jwt/-/express-jwt-7.6.2.tgz#fb82d46ab58c14be65efb9df3629b6b6472b7e9a"

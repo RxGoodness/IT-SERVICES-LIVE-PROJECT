@@ -1,6 +1,7 @@
 import express from "express";
 import logger from "morgan";
 import { connectDB } from "./config/db";
+import protect from './middlewares/protectRoute'
 
 import router from "./routes";
 import admin from "./routes/admin.route";
@@ -16,7 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/public", express.static("public"));
 
 app.use("/", router);
-app.use("/admin", admin);
+app.use("/admin", protect, admin);
 
 connectDB();
 
