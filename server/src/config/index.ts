@@ -6,13 +6,8 @@ import mongoose from "mongoose"
 
 const connectDB = async () => {
     try {
-<<<<<<< HEAD
-        // await mongoose.connect(`mongodb+srv://${database_userName}:${database_password}@cluster0.ymwz0.mongodb.net/${database_name}?retryWrites=true&w=majority`)
-        await mongoose.connect('mongodb://localhost:27017/IT-Service-App');
-=======
         await mongoose.connect(`mongodb://localhost:27017/liveproject-jobs`)
         // await mongoose.connect(`mongodb+srv://${database_userName}:${database_password}@cluster0.ymwz0.mongodb.net/${database_name}?retryWrites=true&w=majority`)
->>>>>>> main
         console.log('mongodb is live....')
     } catch (err) {
         console.log(`could not connect to mongodb ---- ${err}`)
