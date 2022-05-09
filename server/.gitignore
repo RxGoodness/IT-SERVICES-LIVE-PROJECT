@@ -39,6 +39,9 @@ jspm_packages/
 # Distribution directories
 dist/
 
+# Types for express request properties
+@types/
+
 # Typescript v1 declaration files
 typings/
 
