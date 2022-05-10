@@ -12,6 +12,7 @@ import uploadOptions from "../middlewares/imageUpload";
 import { projectValidatior } from "../middlewares/projectMiddleware";
 import protect from "../middlewares/protectRoute";
 import express from "express";
+
 const router = express.Router();
 
 /* GET home page. */
