@@ -30,6 +30,12 @@ const AdminLoginSchema = Joi.object({
   // password: Joi.string().regex(PasswordRegex).error(PasswordError).required(),
 });
 
+const changePasswordValidator = Joi.object({
+  currentPassword: Joi.string().regex(PasswordRegex).message(PasswordError).required(),
+  newPassword: Joi.string().regex(PasswordRegex).message(PasswordError).required(),
+  confirmNewPassword: Joi.string().required().valid(Joi.ref("newPassword"))
+});
+
 type AdminType = {
   firstName: string;
   lastName: string;
@@ -46,4 +52,10 @@ type LoginType = {
   password: string;
 };
 
-export { AdminJoiSchema, AdminLoginSchema, AdminType, LoginType };
+type changePasswordType = {
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
+
+export { AdminJoiSchema, AdminLoginSchema, changePasswordValidator, AdminType, LoginType, changePasswordType };
