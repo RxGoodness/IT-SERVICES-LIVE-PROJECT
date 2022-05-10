@@ -13,7 +13,7 @@ const AdminJoiSchema = Joi.object({
   lastName: Joi.string().required(),
   email: Joi.string().email().message("Enter valid email").required(),
   password: Joi.string().regex(PasswordRegex).message(PasswordError).required(),
-  confirmPassword: Joi.ref("password"),
+  confirmPassword: Joi.string().required().valid(Joi.ref("password")),
   phone: Joi.string()
     .min(11)
     .max(13)
