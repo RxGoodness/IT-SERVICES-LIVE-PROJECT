@@ -130,7 +130,7 @@ const deleteCreatedJob = async (req: Request, res: Response) => {
     }
 };
 
-const getAllJobs = async (req: Request, res: Response) => {
+const getAllJobs = async (_req: Request, res: Response) => {
 
     try {
         const data = await CreateJob.find({});
