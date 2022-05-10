@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction} from 'express'
-import jwt from 'jsonwebtoken';
+import jwt, {JwtPayload} from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
-import Admin from '../models/Admin.schema';
+import Admin from '../models/admin.schema';
 
 const protect = asyncHandler(async(req: Request, res: Response, next: NextFunction) => {
     let token; 
@@ -12,18 +12,17 @@ const protect = asyncHandler(async(req: Request, res: Response, next: NextFuncti
 
             const decoded = jwt.verify(token, `${process.env.JWT_SECRET}`)
 
-            req.user = await Admin.findById(decoded.id).select('-password')
+            req.user = await Admin.findOne(decoded as JwtPayload);
+            console.log(req.user)
 
             next()
         }catch(error){
             console.log(error)
-            res.status(401)
-            throw new Error('Not authorized')
+            res.status(401).json('Not authorized')
         }
     }
     if(!token){
-        res.status(401)
-        throw new Error('Not authorized, no token')
+        res.status(401).json('Not authorized, no token')
     }
 })
 
