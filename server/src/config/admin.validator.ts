@@ -31,9 +31,9 @@ const AdminLoginSchema = Joi.object({
 });
 
 const changePasswordValidator = Joi.object({
-  oldPassword: Joi.string().regex(PasswordRegex).message(PasswordError).required(),
-  newPassword: Joi.ref('oldPassword'),
-  confirmNewPassword: Joi.ref('oldPassword')
+  currentPassword: Joi.string().regex(PasswordRegex).message(PasswordError).required(),
+  newPassword: Joi.string().regex(PasswordRegex).message(PasswordError).required(),
+  confirmNewPassword: Joi.string().required().valid(Joi.ref("newPassword"))
 });
 
 type AdminType = {
@@ -55,7 +55,7 @@ type LoginType = {
 type changePasswordType = {
   currentPassword: string;
   newPassword: string;
-  confirmPassword: string;
+  confirmNewPassword: string;
 }
 
 export { AdminJoiSchema, AdminLoginSchema, changePasswordValidator, AdminType, LoginType, changePasswordType };
