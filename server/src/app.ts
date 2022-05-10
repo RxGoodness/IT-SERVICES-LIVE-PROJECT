@@ -1,7 +1,6 @@
 import express from "express";
 import logger from "morgan";
 import { connectDB } from "./config/db";
-
 import router from "./routes";
 import admin from "./routes/admin.route";
 const cors = require("cors");
