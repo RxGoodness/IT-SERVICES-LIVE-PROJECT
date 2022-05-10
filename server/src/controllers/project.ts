@@ -6,7 +6,7 @@ export const createProject = async (req: Request, res: Response) => {
   try {
     const { name, overview, editor } = req.body;
     const data = await projectDb.create({ name, overview, editor });
-    res.status(200).json(data);
+    res.status(201).json(data);
   } catch (error) {
     res.status(404).json({ message: "Please input right details" });
   }
