@@ -1,4 +1,4 @@
-import request from "supertest"
+import request from "supertest";
 const app = require("../app");
 
 
@@ -20,7 +20,6 @@ describe("Edit User Profile", () => {
         expect(response.body).toEqual({message: "Profile updated successfully!"})
     })
 })
-
 
 
 describe("View A User Profile", () => {
