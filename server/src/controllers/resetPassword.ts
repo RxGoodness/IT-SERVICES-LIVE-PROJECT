@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { resetPasswordSchema } from "../config/resetPasswordJoiSchema";
 import jwt from "jsonwebtoken";
 import Joi from "joi";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 const enterEmail = async (req: Request, res: Response) => {
   try {
