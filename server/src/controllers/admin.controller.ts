@@ -20,7 +20,8 @@ const createAdmin = async (req: Request, res: Response): Promise<any> => {
     const securedPass = await bcrypt.hash(confirmPassword, 10);
     //create data to the database with the hashed password
     await AdminDB.create({ ...data, email, password: securedPass });
-    return res.status(200).json({ token: genToken({ email }) });
+    const token = genToken({ email });
+    return res.status(200).json({ token });
   } catch (err: any) {
     console.log(err);
     return res.status(401).json({ msg: err.details[0].message });
@@ -35,7 +36,8 @@ const loginAdmin = async (req: Request, res: Response): Promise<any> => {
     const admin = await AdminDB.findOne({ email });
     //create data to the database with the hashed password
     if (admin && (await bcrypt.compare(password, admin.password))) {
-      return res.status(200).json({ token: genToken({ email }) });
+      const token = genToken({ email });
+      return res.status(200).json({ token });
     } else {
       return res.status(401).json({ msg: "Invalid credentials" });
     }

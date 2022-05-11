@@ -21,12 +21,13 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "preserveConstEnums": true,
-    "typeRoots": ["@types"]
+    "typeRoots": ["@types"],
+    "types": ["@types/jest"]
   },
   "exclude": ["node_modules", "test"]
 }
