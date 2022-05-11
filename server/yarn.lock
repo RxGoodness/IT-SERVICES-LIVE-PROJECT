@@ -37,11 +37,11 @@
     "@babel/template" "^7.16.7"
     "@babel/traverse" "^7.17.10"
     "@babel/types" "^7.17.10"
-    convert-source-map "^1.7.0"
-    debug "^4.1.0"
-    gensync "^1.0.0-beta.2"
-    json5 "^2.2.1"
-    semver "^6.3.0"
+    "convert-source-map" "^1.7.0"
+    "debug" "^4.1.0"
+    "gensync" "^1.0.0-beta.2"
+    "json5" "^2.2.1"
+    "semver" "^6.3.0"
 
 "@babel/generator@^7.17.10", "@babel/generator@^7.7.2":
   version "7.17.10"
@@ -50,7 +50,7 @@
   dependencies:
     "@babel/types" "^7.17.10"
     "@jridgewell/gen-mapping" "^0.1.0"
-    jsesc "^2.5.1"
+    "jsesc" "^2.5.1"
 
 "@babel/helper-compilation-targets@^7.17.10":
   version "7.17.10"
@@ -59,8 +59,8 @@
   dependencies:
     "@babel/compat-data" "^7.17.10"
     "@babel/helper-validator-option" "^7.16.7"
-    browserslist "^4.20.2"
-    semver "^6.3.0"
+    "browserslist" "^4.20.2"
+    "semver" "^6.3.0"
 
 "@babel/helper-environment-visitor@^7.16.7":
   version "7.16.7"
@@ -149,8 +149,8 @@
   integrity sha512-J9PfEKCbFIv2X5bjTMiZu6Vf341N05QIY+d6FvVKynkG1S7G0j3I0QoRtWIrXhZ+/Nlb5Q0MzqL7TokEJ5BNHg==
   dependencies:
     "@babel/helper-validator-identifier" "^7.16.7"
-    chalk "^2.0.0"
-    js-tokens "^4.0.0"
+    "chalk" "^2.0.0"
+    "js-tokens" "^4.0.0"
 
 "@babel/parser@^7.1.0", "@babel/parser@^7.14.7", "@babel/parser@^7.16.7", "@babel/parser@^7.17.10":
   version "7.17.10"
@@ -270,8 +270,8 @@
     "@babel/helper-split-export-declaration" "^7.16.7"
     "@babel/parser" "^7.17.10"
     "@babel/types" "^7.17.10"
-    debug "^4.1.0"
-    globals "^11.1.0"
+    "debug" "^4.1.0"
+    "globals" "^11.1.0"
 
 "@babel/types@^7.0.0", "@babel/types@^7.16.7", "@babel/types@^7.17.0", "@babel/types@^7.17.10", "@babel/types@^7.3.0", "@babel/types@^7.3.3":
   version "7.17.10"
@@ -279,7 +279,7 @@
   integrity sha512-9O26jG0mBYfGkUYCYZRnBwbVLd1UZOICEr2Em6InB6jVfsAv1GKgwXHmrSg+WFWDmeKTA6vyTZiN8tCSM5Oo3A==
   dependencies:
     "@babel/helper-validator-identifier" "^7.16.7"
-    to-fast-properties "^2.0.0"
+    "to-fast-properties" "^2.0.0"
 
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"
@@ -315,11 +315,11 @@
   resolved "https://registry.npmjs.org/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz"
   integrity sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==
   dependencies:
-    camelcase "^5.3.1"
-    find-up "^4.1.0"
-    get-package-type "^0.1.0"
-    js-yaml "^3.13.1"
-    resolve-from "^5.0.0"
+    "camelcase" "^5.3.1"
+    "find-up" "^4.1.0"
+    "get-package-type" "^0.1.0"
+    "js-yaml" "^3.13.1"
+    "resolve-from" "^5.0.0"
 
 "@istanbuljs/schema@^0.1.2":
   version "0.1.3"
@@ -333,10 +333,10 @@
   dependencies:
     "@jest/types" "^27.5.1"
     "@types/node" "*"
-    chalk "^4.0.0"
-    jest-message-util "^27.5.1"
-    jest-util "^27.5.1"
-    slash "^3.0.0"
+    "chalk" "^4.0.0"
+    "jest-message-util" "^27.5.1"
+    "jest-util" "^27.5.1"
+    "slash" "^3.0.0"
 
 "@jest/core@^27.5.1":
   version "27.5.1"
@@ -349,28 +349,28 @@
     "@jest/transform" "^27.5.1"
     "@jest/types" "^27.5.1"
     "@types/node" "*"
-    ansi-escapes "^4.2.1"
-    chalk "^4.0.0"
-    emittery "^0.8.1"
-    exit "^0.1.2"
-    graceful-fs "^4.2.9"
-    jest-changed-files "^27.5.1"
-    jest-config "^27.5.1"
-    jest-haste-map "^27.5.1"
-    jest-message-util "^27.5.1"
-    jest-regex-util "^27.5.1"
-    jest-resolve "^27.5.1"
-    jest-resolve-dependencies "^27.5.1"
-    jest-runner "^27.5.1"
-    jest-runtime "^27.5.1"
-    jest-snapshot "^27.5.1"
-    jest-util "^27.5.1"
-    jest-validate "^27.5.1"
-    jest-watcher "^27.5.1"
-    micromatch "^4.0.4"
-    rimraf "^3.0.0"
-    slash "^3.0.0"
-    strip-ansi "^6.0.0"
+    "ansi-escapes" "^4.2.1"
+    "chalk" "^4.0.0"
+    "emittery" "^0.8.1"
+    "exit" "^0.1.2"
+    "graceful-fs" "^4.2.9"
+    "jest-changed-files" "^27.5.1"
+    "jest-config" "^27.5.1"
+    "jest-haste-map" "^27.5.1"
+    "jest-message-util" "^27.5.1"
+    "jest-regex-util" "^27.5.1"
+    "jest-resolve" "^27.5.1"
+    "jest-resolve-dependencies" "^27.5.1"
+    "jest-runner" "^27.5.1"
+    "jest-runtime" "^27.5.1"
+    "jest-snapshot" "^27.5.1"
+    "jest-util" "^27.5.1"
+    "jest-validate" "^27.5.1"
+    "jest-watcher" "^27.5.1"
+    "micromatch" "^4.0.4"
+    "rimraf" "^3.0.0"
+    "slash" "^3.0.0"
+    "strip-ansi" "^6.0.0"
 
 "@jest/environment@^27.5.1":
   version "27.5.1"
@@ -380,7 +380,7 @@
     "@jest/fake-timers" "^27.5.1"
     "@jest/types" "^27.5.1"
     "@types/node" "*"
-    jest-mock "^27.5.1"
+    "jest-mock" "^27.5.1"
 
 "@jest/fake-timers@^27.5.1":
   version "27.5.1"
@@ -390,9 +390,9 @@
     "@jest/types" "^27.5.1"
     "@sinonjs/fake-timers" "^8.0.1"
     "@types/node" "*"
-    jest-message-util "^27.5.1"
-    jest-mock "^27.5.1"
-    jest-util "^27.5.1"
+    "jest-message-util" "^27.5.1"
+    "jest-mock" "^27.5.1"
+    "jest-util" "^27.5.1"
 
 "@jest/globals@^27.5.1":
   version "27.5.1"
@@ -401,7 +401,7 @@
   dependencies:
     "@jest/environment" "^27.5.1"
     "@jest/types" "^27.5.1"
-    expect "^27.5.1"
+    "expect" "^27.5.1"
 
 "@jest/reporters@^27.5.1":
   version "27.5.1"
@@ -414,34 +414,34 @@
     "@jest/transform" "^27.5.1"
     "@jest/types" "^27.5.1"
     "@types/node" "*"
-    chalk "^4.0.0"
-    collect-v8-coverage "^1.0.0"
-    exit "^0.1.2"
-    glob "^7.1.2"
-    graceful-fs "^4.2.9"
-    istanbul-lib-coverage "^3.0.0"
-    istanbul-lib-instrument "^5.1.0"
-    istanbul-lib-report "^3.0.0"
-    istanbul-lib-source-maps "^4.0.0"
-    istanbul-reports "^3.1.3"
-    jest-haste-map "^27.5.1"
-    jest-resolve "^27.5.1"
-    jest-util "^27.5.1"
-    jest-worker "^27.5.1"
-    slash "^3.0.0"
-    source-map "^0.6.0"
-    string-length "^4.0.1"
-    terminal-link "^2.0.0"
-    v8-to-istanbul "^8.1.0"
+    "chalk" "^4.0.0"
+    "collect-v8-coverage" "^1.0.0"
+    "exit" "^0.1.2"
+    "glob" "^7.1.2"
+    "graceful-fs" "^4.2.9"
+    "istanbul-lib-coverage" "^3.0.0"
+    "istanbul-lib-instrument" "^5.1.0"
+    "istanbul-lib-report" "^3.0.0"
+    "istanbul-lib-source-maps" "^4.0.0"
+    "istanbul-reports" "^3.1.3"
+    "jest-haste-map" "^27.5.1"
+    "jest-resolve" "^27.5.1"
+    "jest-util" "^27.5.1"
+    "jest-worker" "^27.5.1"
+    "slash" "^3.0.0"
+    "source-map" "^0.6.0"
+    "string-length" "^4.0.1"
+    "terminal-link" "^2.0.0"
+    "v8-to-istanbul" "^8.1.0"
 
 "@jest/source-map@^27.5.1":
   version "27.5.1"
   resolved "https://registry.npmjs.org/@jest/source-map/-/source-map-27.5.1.tgz"
   integrity sha512-y9NIHUYF3PJRlHk98NdC/N1gl88BL08aQQgu4k4ZopQkCw9t9cV8mtl3TV8b/YCB8XaVTFrmUTAJvjsntDireg==
   dependencies:
-    callsites "^3.0.0"
-    graceful-fs "^4.2.9"
-    source-map "^0.6.0"
+    "callsites" "^3.0.0"
+    "graceful-fs" "^4.2.9"
+    "source-map" "^0.6.0"
 
 "@jest/test-result@^27.5.1":
   version "27.5.1"
@@ -451,7 +451,7 @@
     "@jest/console" "^27.5.1"
     "@jest/types" "^27.5.1"
     "@types/istanbul-lib-coverage" "^2.0.0"
-    collect-v8-coverage "^1.0.0"
+    "collect-v8-coverage" "^1.0.0"
 
 "@jest/test-sequencer@^27.5.1":
   version "27.5.1"
@@ -459,9 +459,9 @@
   integrity sha512-LCheJF7WB2+9JuCS7VB/EmGIdQuhtqjRNI9A43idHv3E4KltCTsPsLxvdaubFHSYwY/fNjMWjl6vNRhDiN7vpQ==
   dependencies:
     "@jest/test-result" "^27.5.1"
-    graceful-fs "^4.2.9"
-    jest-haste-map "^27.5.1"
-    jest-runtime "^27.5.1"
+    "graceful-fs" "^4.2.9"
+    "jest-haste-map" "^27.5.1"
+    "jest-runtime" "^27.5.1"
 
 "@jest/transform@^27.5.1":
   version "27.5.1"
@@ -470,19 +470,19 @@
   dependencies:
     "@babel/core" "^7.1.0"
     "@jest/types" "^27.5.1"
-    babel-plugin-istanbul "^6.1.1"
-    chalk "^4.0.0"
-    convert-source-map "^1.4.0"
-    fast-json-stable-stringify "^2.0.0"
-    graceful-fs "^4.2.9"
-    jest-haste-map "^27.5.1"
-    jest-regex-util "^27.5.1"
-    jest-util "^27.5.1"
-    micromatch "^4.0.4"
-    pirates "^4.0.4"
-    slash "^3.0.0"
-    source-map "^0.6.1"
-    write-file-atomic "^3.0.0"
+    "babel-plugin-istanbul" "^6.1.1"
+    "chalk" "^4.0.0"
+    "convert-source-map" "^1.4.0"
+    "fast-json-stable-stringify" "^2.0.0"
+    "graceful-fs" "^4.2.9"
+    "jest-haste-map" "^27.5.1"
+    "jest-regex-util" "^27.5.1"
+    "jest-util" "^27.5.1"
+    "micromatch" "^4.0.4"
+    "pirates" "^4.0.4"
+    "slash" "^3.0.0"
+    "source-map" "^0.6.1"
+    "write-file-atomic" "^3.0.0"
 
 "@jest/types@^27.5.1":
   version "27.5.1"
@@ -493,7 +493,7 @@
     "@types/istanbul-reports" "^3.0.0"
     "@types/node" "*"
     "@types/yargs" "^16.0.0"
-    chalk "^4.0.0"
+    "chalk" "^4.0.0"
 
 "@jridgewell/gen-mapping@^0.1.0":
   version "0.1.1"
@@ -553,7 +553,7 @@
   resolved "https://registry.npmjs.org/@sinonjs/commons/-/commons-1.8.3.tgz"
   integrity sha512-xkNcLAn/wZaX14RPlwizcKicDk9G3F8m2nU3L7Ukm5zBgTwiT0wsoFAHx9Jq56fJA1z/7uKGtCRu16sOUCLIHQ==
   dependencies:
-    type-detect "4.0.8"
+    "type-detect" "4.0.8"
 
 "@sinonjs/fake-timers@^8.0.1":
   version "8.1.0"
@@ -567,7 +567,7 @@
   resolved "https://registry.npmjs.org/@szmarczak/http-timer/-/http-timer-1.1.2.tgz"
   integrity sha512-XIB2XbzHTN6ieIjfIMV9hlVcfPU26s2vafYWQcZHWXHOxiaRZYEDKEwdl129Zyg50+foYV2jCgtrqSA6qNuNSA==
   dependencies:
-    defer-to-connect "^1.0.1"
+    "defer-to-connect" "^1.0.1"
 
 "@tootallnate/once@1":
   version "1.1.2"
@@ -722,8 +722,8 @@
   resolved "https://registry.npmjs.org/@types/jest/-/jest-27.5.0.tgz"
   integrity sha512-9RBFx7r4k+msyj/arpfaa0WOOEcaAZNmN+j80KFbFCoSqCJGHTz7YMAMGQW9Xmqm5w6l5c25vbSjMwlikJi5+g==
   dependencies:
-    jest-matcher-utils "^27.0.0"
-    pretty-format "^27.0.0"
+    "jest-matcher-utils" "^27.0.0"
+    "pretty-format" "^27.0.0"
 
 "@types/jsonwebtoken@^8.5.8":
   version "8.5.8"
@@ -980,11 +980,11 @@ babel-jest@^27.5.1:
     "@jest/transform" "^27.5.1"
     "@jest/types" "^27.5.1"
     "@types/babel__core" "^7.1.14"
-    babel-plugin-istanbul "^6.1.1"
-    babel-preset-jest "^27.5.1"
-    chalk "^4.0.0"
-    graceful-fs "^4.2.9"
-    slash "^3.0.0"
+    "babel-plugin-istanbul" "^6.1.1"
+    "babel-preset-jest" "^27.5.1"
+    "chalk" "^4.0.0"
+    "graceful-fs" "^4.2.9"
+    "slash" "^3.0.0"
 
 babel-plugin-istanbul@^6.1.1:
   version "6.1.1"
@@ -994,8 +994,8 @@ babel-plugin-istanbul@^6.1.1:
     "@babel/helper-plugin-utils" "^7.0.0"
     "@istanbuljs/load-nyc-config" "^1.0.0"
     "@istanbuljs/schema" "^0.1.2"
-    istanbul-lib-instrument "^5.0.4"
-    test-exclude "^6.0.0"
+    "istanbul-lib-instrument" "^5.0.4"
+    "test-exclude" "^6.0.0"
 
 babel-plugin-jest-hoist@^27.5.1:
   version "27.5.1"
@@ -2261,34 +2261,34 @@ istanbul-lib-instrument@^5.0.4, istanbul-lib-instrument@^5.1.0:
     "@babel/core" "^7.12.3"
     "@babel/parser" "^7.14.7"
     "@istanbuljs/schema" "^0.1.2"
-    istanbul-lib-coverage "^3.2.0"
-    semver "^6.3.0"
+    "istanbul-lib-coverage" "^3.2.0"
+    "semver" "^6.3.0"
 
 istanbul-lib-report@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/istanbul-lib-report/-/istanbul-lib-report-3.0.0.tgz"
   integrity sha512-wcdi+uAKzfiGT2abPpKZ0hSU1rGQjUQnLvtY5MpQ7QCTahD3VODhcu4wcfY1YtkGaDD5yuydOLINXsfbus9ROw==
   dependencies:
-    istanbul-lib-coverage "^3.0.0"
-    make-dir "^3.0.0"
-    supports-color "^7.1.0"
+    "istanbul-lib-coverage" "^3.0.0"
+    "make-dir" "^3.0.0"
+    "supports-color" "^7.1.0"
 
 istanbul-lib-source-maps@^4.0.0:
   version "4.0.1"
   resolved "https://registry.npmjs.org/istanbul-lib-source-maps/-/istanbul-lib-source-maps-4.0.1.tgz"
   integrity sha512-n3s8EwkdFIJCG3BPKBYvskgXGoy88ARzvegkitk60NxRdwltLOTaH7CUiMRXvwYorl0Q712iEjcWB+fK/MrWVw==
   dependencies:
-    debug "^4.1.1"
-    istanbul-lib-coverage "^3.0.0"
-    source-map "^0.6.1"
+    "debug" "^4.1.1"
+    "istanbul-lib-coverage" "^3.0.0"
+    "source-map" "^0.6.1"
 
 istanbul-reports@^3.1.3:
   version "3.1.4"
   resolved "https://registry.npmjs.org/istanbul-reports/-/istanbul-reports-3.1.4.tgz"
   integrity sha512-r1/DshN4KSE7xWEknZLLLLDn5CJybV3nw01VTkp6D5jzLuELlcbudfj/eSQFvrKsJuTVCGnePO7ho82Nw9zzfw==
   dependencies:
-    html-escaper "^2.0.0"
-    istanbul-lib-report "^3.0.0"
+    "html-escaper" "^2.0.0"
+    "istanbul-lib-report" "^3.0.0"
 
 jest-changed-files@^27.5.1:
   version "27.5.1"
@@ -2296,8 +2296,8 @@ jest-changed-files@^27.5.1:
   integrity sha512-buBLMiByfWGCoMsLLzGUUSpAmIAGnbR2KJoMN10ziLhOLvP4e0SlypHnAel8iqQXTrcbmfEY9sSqae5sgUsTvw==
   dependencies:
     "@jest/types" "^27.5.1"
-    execa "^5.0.0"
-    throat "^6.0.1"
+    "execa" "^5.0.0"
+    "throat" "^6.0.1"
 
 jest-circus@^27.5.1:
   version "27.5.1"
@@ -2395,10 +2395,10 @@ jest-each@^27.5.1:
   integrity sha512-1Ff6p+FbhT/bXQnEouYy00bkNSY7OUpfIcmdl8vZ31A1UUaurOLPA8a8BbJOF2RDUElwJhmeaV7LnagI+5UwNQ==
   dependencies:
     "@jest/types" "^27.5.1"
-    chalk "^4.0.0"
-    jest-get-type "^27.5.1"
-    jest-util "^27.5.1"
-    pretty-format "^27.5.1"
+    "chalk" "^4.0.0"
+    "jest-get-type" "^27.5.1"
+    "jest-util" "^27.5.1"
+    "pretty-format" "^27.5.1"
 
 jest-environment-jsdom@^27.5.1:
   version "27.5.1"
@@ -2409,9 +2409,9 @@ jest-environment-jsdom@^27.5.1:
     "@jest/fake-timers" "^27.5.1"
     "@jest/types" "^27.5.1"
     "@types/node" "*"
-    jest-mock "^27.5.1"
-    jest-util "^27.5.1"
-    jsdom "^16.6.0"
+    "jest-mock" "^27.5.1"
+    "jest-util" "^27.5.1"
+    "jsdom" "^16.6.0"
 
 jest-environment-node@^27.5.1:
   version "27.5.1"
@@ -2422,8 +2422,8 @@ jest-environment-node@^27.5.1:
     "@jest/fake-timers" "^27.5.1"
     "@jest/types" "^27.5.1"
     "@types/node" "*"
-    jest-mock "^27.5.1"
-    jest-util "^27.5.1"
+    "jest-mock" "^27.5.1"
+    "jest-util" "^27.5.1"
 
 jest-get-type@^27.5.1:
   version "27.5.1"
@@ -2438,17 +2438,17 @@ jest-haste-map@^27.5.1:
     "@jest/types" "^27.5.1"
     "@types/graceful-fs" "^4.1.2"
     "@types/node" "*"
-    anymatch "^3.0.3"
-    fb-watchman "^2.0.0"
-    graceful-fs "^4.2.9"
-    jest-regex-util "^27.5.1"
-    jest-serializer "^27.5.1"
-    jest-util "^27.5.1"
-    jest-worker "^27.5.1"
-    micromatch "^4.0.4"
-    walker "^1.0.7"
+    "anymatch" "^3.0.3"
+    "fb-watchman" "^2.0.0"
+    "graceful-fs" "^4.2.9"
+    "jest-regex-util" "^27.5.1"
+    "jest-serializer" "^27.5.1"
+    "jest-util" "^27.5.1"
+    "jest-worker" "^27.5.1"
+    "micromatch" "^4.0.4"
+    "walker" "^1.0.7"
   optionalDependencies:
-    fsevents "^2.3.2"
+    "fsevents" "^2.3.2"
 
 jest-jasmine2@^27.5.1:
   version "27.5.1"
@@ -2530,8 +2530,8 @@ jest-resolve-dependencies@^27.5.1:
   integrity sha512-QQOOdY4PE39iawDn5rzbIePNigfe5B9Z91GDD1ae/xNDlu9kaat8QQ5EKnNmVWPV54hUdxCVwwj6YMgR2O7IOg==
   dependencies:
     "@jest/types" "^27.5.1"
-    jest-regex-util "^27.5.1"
-    jest-snapshot "^27.5.1"
+    "jest-regex-util" "^27.5.1"
+    "jest-snapshot" "^27.5.1"
 
 jest-resolve@^27.5.1:
   version "27.5.1"
@@ -2610,7 +2610,7 @@ jest-serializer@^27.5.1:
   integrity sha512-jZCyo6iIxO1aqUxpuBlwTDMkzOAJS4a3eYz3YzgxxVQFwLeSA7Jfq5cbqCY+JLvTDrWirgusI/0KwxKMgrdf7w==
   dependencies:
     "@types/node" "*"
-    graceful-fs "^4.2.9"
+    "graceful-fs" "^4.2.9"
 
 jest-snapshot@^27.5.1:
   version "27.5.1"
@@ -2647,10 +2647,10 @@ jest-util@^27.0.0, jest-util@^27.5.1:
   dependencies:
     "@jest/types" "^27.5.1"
     "@types/node" "*"
-    chalk "^4.0.0"
-    ci-info "^3.2.0"
-    graceful-fs "^4.2.9"
-    picomatch "^2.2.3"
+    "chalk" "^4.0.0"
+    "ci-info" "^3.2.0"
+    "graceful-fs" "^4.2.9"
+    "picomatch" "^2.2.3"
 
 jest-validate@^27.5.1:
   version "27.5.1"
@@ -2658,11 +2658,11 @@ jest-validate@^27.5.1:
   integrity sha512-thkNli0LYTmOI1tDB3FI1S1RTp/Bqyd9pTarJwL87OIBFuqEb5Apv5EaApEudYg4g86e3CT6kM0RowkhtEnCBQ==
   dependencies:
     "@jest/types" "^27.5.1"
-    camelcase "^6.2.0"
-    chalk "^4.0.0"
-    jest-get-type "^27.5.1"
-    leven "^3.1.0"
-    pretty-format "^27.5.1"
+    "camelcase" "^6.2.0"
+    "chalk" "^4.0.0"
+    "jest-get-type" "^27.5.1"
+    "leven" "^3.1.0"
+    "pretty-format" "^27.5.1"
 
 jest-watcher@^27.5.1:
   version "27.5.1"
@@ -2672,10 +2672,10 @@ jest-watcher@^27.5.1:
     "@jest/test-result" "^27.5.1"
     "@jest/types" "^27.5.1"
     "@types/node" "*"
-    ansi-escapes "^4.2.1"
-    chalk "^4.0.0"
-    jest-util "^27.5.1"
-    string-length "^4.0.1"
+    "ansi-escapes" "^4.2.1"
+    "chalk" "^4.0.0"
+    "jest-util" "^27.5.1"
+    "string-length" "^4.0.1"
 
 jest-worker@^27.5.1:
   version "27.5.1"
@@ -2683,8 +2683,8 @@ jest-worker@^27.5.1:
   integrity sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==
   dependencies:
     "@types/node" "*"
-    merge-stream "^2.0.0"
-    supports-color "^8.0.0"
+    "merge-stream" "^2.0.0"
+    "supports-color" "^8.0.0"
 
 jest@^27.5.1:
   version "27.5.1"
@@ -2692,8 +2692,8 @@ jest@^27.5.1:
   integrity sha512-Yn0mADZB89zTtjkPJEXwrac3LHudkQMR+Paqa8uxJHCBr9agxztUifWCyiYrjhMPBoUVBjyny0I7XH6ozDr7QQ==
   dependencies:
     "@jest/core" "^27.5.1"
-    import-local "^3.0.2"
-    jest-cli "^27.5.1"
+    "import-local" "^3.0.2"
+    "jest-cli" "^27.5.1"
 
 joi@^17.6.0:
   version "17.6.0"
@@ -3030,17 +3030,17 @@ mongodb-connection-string-url@^2.5.2:
   integrity sha512-tWDyIG8cQlI5k3skB6ywaEA5F9f5OntrKKsT/Lteub2zgwSUlhqEN2inGgBTm8bpYJf8QYBdA/5naz65XDpczA==
   dependencies:
     "@types/whatwg-url" "^8.2.1"
-    whatwg-url "^11.0.0"
+    "whatwg-url" "^11.0.0"
 
 mongodb@4.5.0:
   version "4.5.0"
   resolved "https://registry.npmjs.org/mongodb/-/mongodb-4.5.0.tgz"
   integrity sha512-A2l8MjEpKojnhbCM0MK3+UOGUSGvTNNSv7AkP1fsT7tkambrkkqN/5F2y+PhzsV0Nbv58u04TETpkaSEdI2zKA==
   dependencies:
-    bson "^4.6.2"
-    denque "^2.0.1"
-    mongodb-connection-string-url "^2.5.2"
-    socks "^2.6.2"
+    "bson" "^4.6.2"
+    "denque" "^2.0.1"
+    "mongodb-connection-string-url" "^2.5.2"
+    "socks" "^2.6.2"
   optionalDependencies:
     saslprep "^1.0.3"
 
@@ -4149,8 +4149,8 @@ v8-to-istanbul@^8.1.0:
   integrity sha512-FGtKtv3xIpR6BYhvgH8MI/y78oT7d8Au3ww4QIxymrCtZEh5b8gCw2siywE+puhEmuWKDtmfrvF5UlB298ut3w==
   dependencies:
     "@types/istanbul-lib-coverage" "^2.0.1"
-    convert-source-map "^1.6.0"
-    source-map "^0.7.3"
+    "convert-source-map" "^1.6.0"
+    "source-map" "^0.7.3"
 
 vary@^1, vary@~1.1.2:
   version "1.1.2"
