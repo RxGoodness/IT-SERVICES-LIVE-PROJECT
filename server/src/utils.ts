@@ -50,4 +50,15 @@ async function sendEmail(email: any, subject: any, text: any) {
     },
   );
 }
+
+export const transform = (message: string) => {
+  const result = message.split(`\"`).join('');
+  return result;
+};
+
+export const validateImageFile = async (file: string) => {
+  if(!file) {
+    return "No image in the request";
+  } 
+}
 export { sendEmail };

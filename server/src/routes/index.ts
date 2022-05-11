@@ -12,6 +12,8 @@ import uploadOptions from "../middlewares/imageUpload";
 import { projectValidatior } from "../middlewares/projectMiddleware";
 import protect from "../middlewares/protectRoute";
 import express from "express";
+import validateJobFields from "../middlewares/validateJob_fields";
+import validateJobUpdate from "../middlewares/validateJobUpdate";
 
 const router = express.Router();
 
@@ -20,13 +22,8 @@ const router = express.Router();
 router.post("/projects", projectValidatior, protect, createProject);
 router.put("/projects/:id", projectValidatior, protect, updateProject);
 router.delete("/projects/:id", protect, deleteProject);
-router.post("/create_jobs", uploadOptions.single("image"), protect, createJob);
-router.put(
-  "/update_jobs/:id",
-  uploadOptions.single("image"),
-  protect,
-  updateCreatedJob
-);
+router.post('/create_jobs', uploadOptions.single('image'), validateJobFields, createJob);
+router.put('/update_jobs/:id', uploadOptions.single('image'), validateJobUpdate, updateCreatedJob);
 router.delete("/delete_jobs/:id", protect, deleteCreatedJob);
 
 export default router;
