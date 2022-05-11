@@ -2,7 +2,7 @@ import express from "express";
 import logger from "morgan";
 import { connectDB } from "./config/db";
 
-import router from "./routes";
+import router from "./routes/editViewUser";
 import blogRouter from "./routes/blogRoute";
 import admin from "./routes/admin.route";
 import resetPasswordRoute from "./routes/resetPassword";
