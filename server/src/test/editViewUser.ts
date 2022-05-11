@@ -2,7 +2,7 @@ import request from "supertest";
 const app = require("../app");
 
 
-describe("Edit User Profile", () => {
+describe("Edit a User Profile", () => {
     it("This should edit and update user profile", async () => {
         const response = await request(app).put("/edit-profile/edit")
         .query({
