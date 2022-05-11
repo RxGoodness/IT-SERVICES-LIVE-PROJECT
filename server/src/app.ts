@@ -1,9 +1,12 @@
 import express from "express";
 import logger from "morgan";
-import { connectDB } from "./config";
+import { connectDB } from "./config/db";
 
 import router from "./routes";
 import blogRouter from "./routes/blogRoute";
+import admin from "./routes/admin.route";
+import resetPasswordRoute from "./routes/resetPassword";
+
 const cors = require("cors");
 
 const app = express();
@@ -17,6 +20,8 @@ app.use("/public", express.static("public"));
 
 app.use("/", router);
 app.use("/", blogRouter);
+app.use("/admin", admin);
+app.use("/reset-password", resetPasswordRoute);
 
 connectDB();
 
