@@ -1,31 +1,19 @@
 import { Request, Response} from "express";
-import Joi from "joi";
-import mongoose from "mongoose";
-import CreateJob from "../models/createJobSchema";
 import { unlink } from "fs/promises";
+import { validateImageFile } from "../utils";
+import { createJob_Repo, findAndRemoveId_Repo, findIdAndUpdate_Repo, getJobsById, validateId } from "../repository/job_repository";
+import CreateJob from "../models/createJobSchema";
 
 
-const createJob = async (req:any, res:Response) => {
-    const schema = Joi.object({
-        title: Joi.string().required(),
-        location: Joi.string().required(),
-        employmentType: Joi.string().required(),
-        description: Joi.string().required()
-    });
-
-    const validSchema = schema.validate(req.body);
-
-    if(validSchema.error) {
-        await unlink(req.file.path);
-        return res.status(400).send(validSchema.error.details[0].message);
-    };
+const createJob = async (req:Record<string, any>, res:Response) => {
 
     const file = req.file;
-    
-    if(!file) {
-        return res.status(400).send("No image in the request");
-    }
+    const checkfile = await validateImageFile(file);
 
+    if(checkfile){
+        return res.status(400).send(checkfile);
+    }
+    
     try {
         const {title, location, employmentType, description} = req.body;
         const fileName = req.file.filename;
@@ -38,9 +26,7 @@ const createJob = async (req:any, res:Response) => {
             description
         };
 
-        const data = await CreateJob.create(crtJobs);
-      
-        return res.status(200).send(data);
+        await createJob_Repo(crtJobs, res);
 
     } catch (error) {
         await unlink(req.file.path);
@@ -51,33 +37,18 @@ const createJob = async (req:any, res:Response) => {
 
 
 const updateCreatedJob = async (req:Request, res:Response) => {
-    const file:any = req.file;
-    let imagepath: any;
+    const file: any = req.file;
+    let imagepath: unknown;
 
-    if(!mongoose.isValidObjectId(req.params.id)) {
-        await unlink(file.path);
+    const checkIdExists = await validateId(req.params.id);
+
+    if(!checkIdExists) {
         return res.status(400).send("Invalid Job Id");
     };
 
-    const schema = Joi.object({
-        title: Joi.string(),
-        location: Joi.string(),
-        employmentType: Joi.string(),
-        description: Joi.string()
-    });
-
-    const validSchema = schema.validate(req.body);
-
-    if(validSchema.error) {
-        await unlink(file.path);
-        return res.status(400).send(validSchema.error.details[0].message);
-        
-    };
-
-    const jobs = await CreateJob.findById(req.params.id);
+    const jobs = await getJobsById(req.params.id);
 
     if(!jobs){
-        await unlink(file.path);
         return res.status(404).send("Job not found");
     };
 
@@ -91,33 +62,28 @@ const updateCreatedJob = async (req:Request, res:Response) => {
     }
 
     try {
-        const updateJob = await CreateJob.findByIdAndUpdate(
-            req.params.id, 
-            {
-                title: req.body.title || jobs.title,
-                image: imagepath,
-                location: req.body.location || jobs.location,
-                employmentType: req.body.employmentType || jobs.employmentType,
-                description: req.body.description || jobs.description
-            }, {new: true}
-        );
+        const checkAndUpdate: Record<string, any> = {
+            title: req.body.title || jobs.title,
+            image: imagepath,
+            location: req.body.location || jobs.location,
+            employmentType: req.body.employmentType || jobs.employmentType,
+            description: req.body.description || jobs.description
+        }
 
-        if(!updateJob){
-            await unlink(file.path);
-            return res.status(404).send("Job not updated");
-        };
+        const updateJob = await findIdAndUpdate_Repo(req.params.id, checkAndUpdate)
 
         return res.status(200).send(updateJob);
+
     } catch (error) {
         await unlink(file.path);
-        return res.status(500).send(error);
+            return res.status(404).send("Job not updated");
     } 
 };
 
 
 const deleteCreatedJob = async (req:Request, res:Response) => {
     try {
-        const deletedJob =  await CreateJob.findByIdAndRemove(req.params.id)
+        const deletedJob =  await findAndRemoveId_Repo(req.params.id)
         if(!deletedJob){
             return res.status(404).send("Job not found");
         }else{
@@ -130,4 +96,16 @@ const deleteCreatedJob = async (req:Request, res:Response) => {
     }
 };
 
-export {createJob, updateCreatedJob, deleteCreatedJob};
+const getAllJobs = async (_req: Request, res: Response) => {
+
+    try {
+        const data = await CreateJob.find({});
+        return res.status(200).send(data);
+    }
+    catch (error) {
+        return res.status(500).send(error);
+    }
+
+}
+
+export {createJob, updateCreatedJob, deleteCreatedJob, getAllJobs};
