@@ -1,9 +1,9 @@
 import express from "express";
 
-import {quote} from "../controllers/quotes"
+import { quote } from "../controllers/quotes";
 
 const router = express.Router();
 
-router.post('/quotes', quote)
+router.post("/", quote);
 
-export default router
+export default router;
