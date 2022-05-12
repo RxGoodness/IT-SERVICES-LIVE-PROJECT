@@ -45,7 +45,7 @@ async function sendEmail(email: any, subject: any, text: any) {
       if (err) {
         console.log(err);
       } else {
-        // console.log("Email sent to user " + info.response);
+        console.log("Email sent to user " + info.response);
       }
     },
   );
