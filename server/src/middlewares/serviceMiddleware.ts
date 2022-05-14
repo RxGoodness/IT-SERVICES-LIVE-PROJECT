@@ -4,7 +4,7 @@ import { FinalError, formatError } from "../utils";
 
 const schema = Joi.object({
   category: Joi.string().required(),
-  subcategory: Joi.string().required(),
+  subcategory: Joi.array().items(Joi.string()).required(),
   description: Joi.string().required(),
   bestFeature: Joi.string().required(),
   technologies: Joi.string().required(),

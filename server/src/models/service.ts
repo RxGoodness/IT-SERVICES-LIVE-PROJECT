@@ -17,7 +17,7 @@ const serviceSchema = new Schema(
     subcategory: [
       {
         subDescription: {
-          type: String,
+          type: [String],
           enum: [
             'Healthcare',
             'Education',
@@ -27,10 +27,10 @@ const serviceSchema = new Schema(
             'Real Estate',
             'Other',
           ],
-          // required: true,
+          required: true,
         },
         images: {
-          type: String,
+          type: [String],
           required: true,
         },
       }],
