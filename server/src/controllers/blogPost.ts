@@ -113,7 +113,7 @@ const viewBlogs = asyncHandler(
 
 
 const commentPost = asyncHandler(
-  async (req: Request, res: Response): Promise<any> => {
+  async (req: Request, res: Response) => {
     const schema = Joi.object().keys({
       comments: Joi.object().keys({
         name: Joi.string().required(),
@@ -143,7 +143,7 @@ const commentPost = asyncHandler(
         },
         { new: true }
       );
-      return res.status(200).json(commentedPost);
+      res.status(200).json(commentedPost);
     } else {
       res.status(401);
       throw new Error("comment not successful")
