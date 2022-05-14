@@ -27,7 +27,7 @@ const sendMail = asyncHandler(
         res.status(400);
         throw new Error("Email not sent");
       } else {
-        return res.status(200).json({ message: "Email sent successfully" });
+        res.status(200).json({ message: "Email sent successfully" });
       }
     })
   }
