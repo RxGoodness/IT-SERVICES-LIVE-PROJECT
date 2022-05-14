@@ -4,9 +4,6 @@ const PasswordRegex =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 const PasswordError =
   "Password must be at least 8 character, include uppercase, lowercase, digit and special character.";
-// const PasswordError = new Error(
-//   "Password must be at least 8 character, include uppercase, lowercase, digit and special character."
-// );
 
 const AdminJoiSchema = Joi.object({
   firstName: Joi.string().required(),
@@ -27,13 +24,18 @@ const AdminJoiSchema = Joi.object({
 const AdminLoginSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().regex(PasswordRegex).message(PasswordError).required(),
-  // password: Joi.string().regex(PasswordRegex).error(PasswordError).required(),
 });
 
 const changePasswordValidator = Joi.object({
-  currentPassword: Joi.string().regex(PasswordRegex).message(PasswordError).required(),
-  newPassword: Joi.string().regex(PasswordRegex).message(PasswordError).required(),
-  confirmNewPassword: Joi.string().required().valid(Joi.ref("newPassword"))
+  currentPassword: Joi.string()
+    .regex(PasswordRegex)
+    .message(PasswordError)
+    .required(),
+  newPassword: Joi.string()
+    .regex(PasswordRegex)
+    .message(PasswordError)
+    .required(),
+  confirmNewPassword: Joi.string().required().valid(Joi.ref("newPassword")),
 });
 
 type AdminType = {
@@ -56,6 +58,13 @@ type changePasswordType = {
   currentPassword: string;
   newPassword: string;
   confirmNewPassword: string;
-}
+};
 
-export { AdminJoiSchema, AdminLoginSchema, changePasswordValidator, AdminType, LoginType, changePasswordType };
+export {
+  AdminJoiSchema,
+  AdminLoginSchema,
+  changePasswordValidator,
+  AdminType,
+  LoginType,
+  changePasswordType,
+};
