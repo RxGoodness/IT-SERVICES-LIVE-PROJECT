@@ -4,7 +4,7 @@ import app from "../app";
 describe("View A User Profile", () => {
     it("This should view a user profile", async () => {
         const response = await request(app).get("/profile/view")
-            .query({ email: 'smart@tech.com' })
+            .query({ email: 'nk@gmail.com' })
         expect(response.body).toHaveProperty("firstName");
         expect(response.body).toHaveProperty("lastName");
         expect(response.body).toHaveProperty("email");
