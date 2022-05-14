@@ -1,113 +1,100 @@
 import { Post } from "../models/blogModel";
 import { Request, Response } from "express";
+import asyncHandler from "express-async-handler";
 import Joi from "joi";
+import { MongooseError } from 'mongoose'
 
 //CREATE POST
-const createBlog = async (req: Request, res: Response) => {
-  const schema = Joi.object({
-    title: Joi.string().required(),
-    message: Joi.string().required(),
-    summary: Joi.string().required(),
-    category: Joi.string().required(),
-    description: Joi.string().required(),
-    comment: Joi.string(),
-    username:Joi.string()
-  });
-  const validSchema = schema.validate(req.body);
-  if (validSchema.error) {
-    res.status(400).send(validSchema.error.details[0].message);
-  }
+const createBlog = asyncHandler(
+  async (req: Request, res: Response) => {
+    const schema = Joi.object({
+      title: Joi.string().required(),
+      message: Joi.string().required(),
+      summary: Joi.string().required(),
+      category: Joi.string().required(),
+      description: Joi.string().required(),
+      comment: Joi.string(),
+      username: Joi.string()
+    });
 
+    //Validate req,body
+    await schema.validateAsync(req.body);
 
-  const newPost = new Post(req.body);
-  try {
+    const newPost = new Post(req.body);
     const savedPost = await newPost.save();
     res.status(200).json(savedPost);
-  } catch (err) {
-    res.status(500).json(err);
   }
-};
+)
+
 
 //UPDATE POST
-const editBlog = async (req: Request, res: Response) => {
-  try{
- 
-  const schema = Joi.object({
-    title: Joi.string().required(),
-    message: Joi.string().required(),
-    summary: Joi.string().required(),
-    category: Joi.string().required(),
-    description: Joi.string().required(),
-    username:Joi.string()
-  });
-  
-  const validSchema = schema.validate(req.body);
-  if (validSchema.error) {
-    res.status(400).send(validSchema.error.details[0].message);
-  }
-  
+const editBlog = asyncHandler(
+  async (req: Request, res: Response) => {
+    const schema = Joi.object({
+      title: Joi.string().required(),
+      message: Joi.string().required(),
+      summary: Joi.string().required(),
+      category: Joi.string().required(),
+      description: Joi.string().required(),
+      username: Joi.string()
+    });
 
-    const post = await Post.findOne({id: req.params.id});
-    console.log(post.id)
-    
+    //Validate Schema
+    await schema.validateAsync(req.body);
+
+    //Get Post from database
+    const post = await Post.findOne({ id: req.params.id });
 
     if (post) {
-      try {
-        const updatedPost = await Post.findOneAndUpdate(
-          {id: req.params.id},
-          {
-            $set: req.body,
-          },
-          { new: true }
-        );
-        res.status(200).json(updatedPost);
-      } catch (err) {
-        res.status(500).json(err);
-      }
+      const updatedPost = await Post.findOneAndUpdate(
+        { id: req.params.id },
+        {
+          $set: req.body,
+        },
+        { new: true }
+      );
+      res.status(200).json(updatedPost);
     } else {
-      res.status(401).json("You can update only your post!");
+      res.status(401);
+      throw new Error("You can update only your post!");
     }
   }
-    catch (err) {
-      res.status(500).json(err);
-    }
-  }
+)
 
-  
 //DELETE POST
-const deleteBlog = async (req: Request, res: Response) => {
-  try {
+const deleteBlog = asyncHandler(
+  async (req: Request, res: Response) => {
     const post = await Post.findById(req.params.id);
     if (post) {
       try {
         await post.delete();
         res.status(200).json("Post has been deleted...");
       } catch (err) {
-        res.status(500).json(err);
+        res.status(400);
+        throw new Error("Post not deleted");
       }
     } else {
-      res.status(401).json("Blogpost not found!");
+      res.status(400);
+      throw new Error("Blog post not found!");
     }
-  } catch (err) {
-    res.status(500).json(err);
   }
-};
+)
+
 
 //GET POST
-const viewBlog = async (req: Request, res: Response) => {
-  try {
+const viewBlog = asyncHandler(
+  async (req: Request, res: Response) => {
     const post = await Post.findById(req.params.id);
     res.status(200).json(post);
-  } catch (err) {
-    res.status(500).json(err);
   }
-};
+)
+
 
 //GET ALL POSTS
-const viewBlogs = async (req: Request, res: Response) => {
-  const userTitle = req.query.title;
-  const catName = req.query.category;
-  try {
+const viewBlogs = asyncHandler(
+  async (req: Request, res: Response) => {
+    const userTitle = req.query.title;
+    const catName = req.query.category;
     let posts;
     if (userTitle) {
       posts = await Post.find({ userTitle });
@@ -121,56 +108,47 @@ const viewBlogs = async (req: Request, res: Response) => {
       posts = await Post.find();
     }
     res.status(200).json(posts);
-  } catch (err) {
-    res.status(500).json(err);
   }
-};
+)
 
-const commentPost = async (req: Request, res: Response) => {
-const schema = Joi.object().keys({
-  comments: Joi.object().keys({
-      name: Joi.string().required(),
-      email: Joi.string().required(), 
-      comment: Joi.string().required(), 
-    })
-  })
 
-const validSchema = schema.validate(req.body);
+const commentPost = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const schema = Joi.object().keys({
+      comments: Joi.object().keys({
+        name: Joi.string().required(),
+        email: Joi.string().required(),
+        comment: Joi.string().required(),
+      })
+    });
 
-if (validSchema.error) {
-  res.status(400).send(validSchema.error.details[0].message);
-}
+    await schema.validateAsync(req.body);
+    const post = await Post.findOne({
+      _id: req.params.id
+    });
 
-try {
-  const post = await Post.findOne({
-    _id: req.params.id});
-  console.log(post)
-  if (post) {
-    try {
+    if (post) {
       const commentedPost = await Post.findOneAndUpdate(
-        {_id: req.params.id},
+        { _id: req.params.id },
         {
-          $push: 
-          {"comments": {name: req.body.comments.name, 
-            email:req.body.comments.email,
-            comment:req.body.comments.comment
-          }}
-          
+          $push:
+          {
+            "comments": {
+              name: req.body.comments.name,
+              email: req.body.comments.email,
+              comment: req.body.comments.comment
+            }
+          }
+
         },
         { new: true }
       );
-      console.log(post)
-
-      res.status(200).json(commentedPost);
-    } catch (err) {
-      res.status(500).json(err);
+      return res.status(200).json(commentedPost);
+    } else {
+      res.status(401);
+      throw new Error("comment not successful")
     }
-  } else {
-    res.status(401).json("comment not succesful");
   }
-} catch (err) {
-  res.status(500).json(err);
-}
-};
+)
 
 export { createBlog, deleteBlog, editBlog, viewBlog, viewBlogs, commentPost };
