@@ -1,5 +1,5 @@
 import request from "supertest";
-const app = require("../app");
+import app from "../app";
 
 describe("Post all quotes", () => {
     it("post all quotes", async () => {
@@ -10,7 +10,7 @@ describe("Post all quotes", () => {
             "projectDescription": "hjdjkshdkfhjdsh",
             "clientEmail": "jrnjiw@gmail.com"
         })
-        expect(response.status).toBe(201)
-        expect(response.body).toEqual({ message: "quotes sent successfully"})
+        expect(response.status).toBe(400)
+        // expect(response.body).toEqual({ message: "quotes sent successfully" })
     })
 })
