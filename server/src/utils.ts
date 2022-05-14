@@ -1,4 +1,6 @@
 import nodemailer from "nodemailer";
+/**
+ ***Joi Error formatter***
 
 interface JoiError {
   message: string;
@@ -21,6 +23,12 @@ export interface FinalError {
   original: Object;
   details: JoiError[];
 }
+
+export const transform = (message: string) => {
+  const result = message.split(`\"`).join('');
+  return result;
+};
+ */
 
 //send Email
 async function sendEmail(email: any, subject: any, text: any) {
@@ -45,9 +53,15 @@ async function sendEmail(email: any, subject: any, text: any) {
       if (err) {
         console.log(err);
       } else {
-        // console.log("Email sent to user " + info.response);
+        console.log("Email sent to user " + info.response);
       }
     },
   );
+}
+
+export const validateImageFile = async (file: string) => {
+  if (!file) {
+    return "No image in the request";
+  }
 }
 export { sendEmail };
