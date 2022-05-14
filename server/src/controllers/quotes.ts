@@ -5,7 +5,7 @@ import { quoteSchema } from "../config/quote.validator";
 
 
 export const quote = asyncHandler(
-  async (req: Request, res: Response): Promise<any> => {
+  async (req: Request, res: Response) => {
 
     const { name, quote, technologies, projectDescription, clientEmail } = req.body;
 
@@ -21,7 +21,7 @@ export const quote = asyncHandler(
     }
 
     await sendEmail(clientEmail, "Your Quote Request", quoteStr);
-    return res.status(201).json({ message: "quotes sent successfully" });
+    res.status(201).json({ message: "quotes sent successfully" });
 
   }
 )
