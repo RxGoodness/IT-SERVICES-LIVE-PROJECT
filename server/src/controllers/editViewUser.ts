@@ -1,56 +1,46 @@
 import { Request, Response, NextFunction } from "express";
-import User from "../models/editViewUser";
+import AdminDB from "../models/admin.schema";
+import asyncHandler from "express-async-handler";
 
 
 
-const viewProfile = async (req: Request, res: Response, next: NextFunction) => {
+const viewProfile = asyncHandler(
+    async (req: Request, res: Response) => {
 
-    try {
-       
         let email = req.query.email;
-   
-        const user = await User.findOne( {email} );
+
+        // Exclude password from the result
+        const user = await AdminDB.findOne({ email }).select("-password");
 
         // CHECK IF USER EXIST
-        if (user){
+        if (user) {
             res.status(200).json(user);
-        }else{
-            res.status(404).json({
-                message: 'User not found!'
-            })
+        } else {
+            res.status(404);
+            throw new Error('User not found!')
         }
-    } catch (error) {
-        next(error)
     }
-}
+)
 
 
-const editProfile = async (req: Request, res: Response, next: NextFunction) => {
 
-    try {
+const editProfile = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+
         let email = req.query.email;
-        
-        const user = await User.findOne( { email } );
+        const user = await AdminDB.findOne({ email });
 
         // CHECK IF USER EXIST BEFORE UPDATING PROFILE
         if (!user) {
-            res.status(404).json({
-                message: 'User does not exist!'
-            })
-        }else{
-            await User.findOneAndUpdate({ email }, req.body, {new: true})
+            res.status(404).json;
+            throw new Error('User does not exist!')
+        } else {
+            await AdminDB.findOneAndUpdate({ email }, req.body, { new: true })
             res.status(200).json({
                 message: 'Profile updated successfully!'
             });
         }
-    } catch (error) {
-        next(error)
     }
-}
+)
 
-
-
-export {
-    viewProfile,
-    editProfile
-};
+export { viewProfile, editProfile }
