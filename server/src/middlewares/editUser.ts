@@ -1,5 +1,6 @@
 import Joi from "joi";
 import { Request, Response, NextFunction } from 'express';
+import asyncHandler from "express-async-handler";
 
 
 // EDIT PROFILE VALIDATION
@@ -14,20 +15,11 @@ const editProfileSchema = Joi.object({
 });
 
 
-const editProfileValidator = async (req: Request, res: Response, next: NextFunction) => {
-
-      const result =  await editProfileSchema.validate(req.body);
-      
-      if (result.error) {
-          res.status(422).json({
-              error: result.error.details[0].message
-          })
-      } else {
-          next()
-      }
-}
-
-
-
+const editProfileValidator = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+        await editProfileSchema.validateAsync(req.body);
+        next()
+    }
+)
 
 export default editProfileValidator;
