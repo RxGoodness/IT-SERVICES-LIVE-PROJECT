@@ -28,13 +28,12 @@ const enterEmail = asyncHandler(
     const link = `${process.env.BASE_URL}/reset-password/${user._id}/${webToken}`;
     await sendEmail(user.email, "Password Reset", link);
 
-    res.send("password reset link sent to your email account");
+    res.status(200).json({ msg: "password reset link sent to your email account" });
   }
 )
-  ;
 
 const resetPassword = asyncHandler(
-  async (req: Request, res: Response): Promise<any> => {
+  async (req: Request, res: Response) => {
     //grab the id and token from req.params
     const { userId, token } = req.params;
     const { password, reEnterPassword } = req.body;
@@ -59,7 +58,7 @@ const resetPassword = asyncHandler(
 
     user.password = hashedPassword;
     await user.save();
-    return res.status(200).json({ msg: user });
+    res.status(200).json({ msg: user });
   }
 )
 
