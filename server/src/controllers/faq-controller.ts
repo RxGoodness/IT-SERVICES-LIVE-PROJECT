@@ -49,7 +49,9 @@ export const updateFaq = async (req: Request, res: Response) => {
       { id: questionID },
       { questions: questions, answers: answers }
     );
-    res.status(200).json({ faq });
+
+    const updatedFaq = await faqModel.find({_id:faq.id})
+    res.status(200).json({ updatedFaq });
   } catch (error) {
     res.status(404).json({ message: "Requested ID not found" });
   }
