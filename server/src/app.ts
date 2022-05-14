@@ -2,8 +2,10 @@ import cors from "cors";
 import logger from "morgan";
 import express from "express";
 import { connectDB } from "./config/db";
+
 // Routes
 import admin from "./routes/admin.route";
+import faqRoute from "./routes/faq-route";
 import jobRoute from "./routes/jobs.route";
 import blogRouter from "./routes/blogRoute";
 import quoteRoute from "./routes/quoteRoute";
@@ -11,6 +13,7 @@ import projectRoute from "./routes/project.route";
 import editViewRouter from "./routes/editViewUser";
 import resetPasswordRoute from "./routes/resetPassword";
 import notificationRoute from "./routes/notification.route";
+
 // Error handlers
 import notFound from "./middlewares/errorMiddlewares/notFound";
 import errorHandler from "./middlewares/errorMiddlewares/errorHandler";
@@ -25,6 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/public", express.static("public"));
 
 // Routes controllers
+app.use("/", faqRoute)
 app.use("/admin", admin);
 app.use("/jobs", jobRoute);
 app.use("/blog", blogRouter);
