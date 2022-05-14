@@ -25,5 +25,6 @@ router.get('/view_notifications', viewNotifications)
 router.post('/send_mail', sendMail)
 
 
-
 export default router;
+
+

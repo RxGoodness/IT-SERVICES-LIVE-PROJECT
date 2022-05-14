@@ -12,8 +12,8 @@ const changePassword = async (req: Request, res: Response) => {
   //  validate password entry wit Joi
   await changePasswordValidator.validateAsync(data);
   // check if user logged in isAdmin
-  if (!req.user) {
-    throw new Error("you are not authorized");
+  if (!admin) {
+    res.status(401).json("you are not authorized");
   }
   try {
     const { currentPassword, newPassword, confirmNewPassword } = data;

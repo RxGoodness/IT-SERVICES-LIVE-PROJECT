@@ -26,4 +26,4 @@ app.use("/", quoteRoute)
 
 connectDB();
 
-module.exports = app;
+export default app;
