@@ -16,7 +16,7 @@ const enterEmail = asyncHandler(
     const user = await User.findOne({ email: req.body.email });
 
     if (!user)
-      return res.status(400).send("user with given email doesn't exist");
+      return res.status(400).json({ msg: "user with given email doesn't exist" });
 
     //create one time secrete
     const secret = process.env.ACCESS_TOKEN_SECRET + user.password;
