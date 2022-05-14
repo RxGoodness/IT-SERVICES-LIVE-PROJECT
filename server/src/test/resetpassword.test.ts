@@ -10,6 +10,6 @@ describe("enter emil for password reset", () => {
       })
       .expect(400);
 
-    console.log(response);
+    
   });
 });
