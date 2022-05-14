@@ -13,7 +13,7 @@ const createJob = asyncHandler(
         const checkfile = await validateImageFile(file);
 
         if (checkfile) {
-            return res.status(200).send(checkfile);
+            return res.status(400).json({ msg: checkfile });
         }
 
         try {
@@ -41,7 +41,7 @@ const createJob = asyncHandler(
 
 
 const updateCreatedJob = asyncHandler(
-    async (req: Request, res: Response): Promise<any> => {
+    async (req: Request, res: Response) => {
         const file: any = req.file;
         let imagepath: unknown;
 
@@ -79,7 +79,7 @@ const updateCreatedJob = asyncHandler(
 
             const updateJob = await findIdAndUpdate_Repo(req.params.id, checkAndUpdate)
 
-            return res.status(200).send(updateJob);
+            res.status(200).send(updateJob);
 
         } catch (error) {
             await unlink(file.path);
@@ -91,13 +91,13 @@ const updateCreatedJob = asyncHandler(
 
 
 const deleteCreatedJob = asyncHandler(
-    async (req: Request, res: Response): Promise<any> => {
+    async (req: Request, res: Response) => {
         const deletedJob = await findAndRemoveId_Repo(req.params.id)
         if (!deletedJob) {
             res.status(404);
             throw new Error("Job not found");
         } else {
-            return res.status(200).json({
+            res.status(200).json({
                 message: "Job deleted successfully"
             });
         }
@@ -106,10 +106,10 @@ const deleteCreatedJob = asyncHandler(
 
 
 const getAllJobs = asyncHandler(
-    async (_req: Request, res: Response): Promise<any> => {
+    async (_req: Request, res: Response) => {
 
         const data = await CreateJob.find({});
-        return res.status(200).json(data);
+        res.status(200).json(data);
     }
 )
 
