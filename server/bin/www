@@ -5,7 +5,7 @@ require("dotenv").config();
  * Module dependencies.
  */
 
-var app = require("../dist/app");
+var app = require("../dist/app").default;
 var debug = require("debug")("server:server");
 var http = require("http");
 
