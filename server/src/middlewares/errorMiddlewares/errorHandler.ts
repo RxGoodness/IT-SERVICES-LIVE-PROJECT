@@ -6,13 +6,14 @@ const errorHandlerMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  let statusCode = res.statusCode || 500;
+  let statusCode = err.http_code || res.statusCode || 500;
   let msg =
     err.message.replaceAll('"', "") || "Something went wrong, try again later";
 
-  if (err.code && err.code === 11000) {
+  if (err.message.includes("E11000")) {
     statusCode = 400;
-    msg = `${Object.keys(err.keyValue)} field has to be unique`;
+    let dupKey = err.message.split("dup key: ")[1];
+    msg = `${dupKey} field has to be unique`.replaceAll('"', "");
   }
 
   if (err.name === "ValidationError" && err.details) {
