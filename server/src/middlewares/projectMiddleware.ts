@@ -1,6 +1,6 @@
 import Joi from "joi";
 import { Request, Response, NextFunction } from "express";
-import { formatError, FinalError } from "../utils";
+import asyncHandler from "express-async-handler";
 
 const project = Joi.object({
   name: Joi.string().required().messages({
@@ -14,17 +14,9 @@ const project = Joi.object({
   }),
 });
 
-export const projectValidatior = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const projectValidatior = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
     await project.validateAsync(req.body, { abortEarly: false });
-    next();
-  } catch (err) {
-    const typeEr = err as FinalError;
-    const errRes = formatError(typeEr.details);
-    res.status(400).json(errRes);
+    next()
   }
-};
+)

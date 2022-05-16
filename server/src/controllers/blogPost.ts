@@ -1,9 +1,10 @@
 import { Post } from "../models/blogModel";
 import { Request, Response } from "express";
-import {createSchema, editSchema, commentSchema} from "../config/blogSchema"
+import {createSchema, editSchema , commentSchema} from "../config/blogSchema"
+import asyncHandler from "express-async-handler"
 
 //CREATE POST
-const createBlog = async (req: Request, res: Response) => {
+const createBlog =  asyncHandler (async (req: Request, res: Response) => {
 
   const validSchema = createSchema.validate(req.body);
   if (validSchema.error) {
@@ -18,10 +19,10 @@ const createBlog = async (req: Request, res: Response) => {
   } catch (err) {
     res.status(500).json(err);
   }
-};
+});
 
 //UPDATE POST
-const editBlog = async (req: Request, res: Response) => {
+const editBlog = asyncHandler (async (req: Request, res: Response) => {
   try{
   
   const validSchema = editSchema.validate(req.body);
@@ -53,11 +54,11 @@ const editBlog = async (req: Request, res: Response) => {
     catch (err) {
       res.status(500).json(err);
     }
-  }
+  })
 
   
 //DELETE POST
-const deleteBlog = async (req: Request, res: Response) => {
+const deleteBlog = asyncHandler (async (req: Request, res: Response) => {
   try {
     const post = await Post.findById(req.params.id);
     if (post) {
@@ -73,20 +74,20 @@ const deleteBlog = async (req: Request, res: Response) => {
   } catch (err) {
     res.status(500).json(err);
   }
-};
+});
 
 //GET POST
-const viewBlog = async (req: Request, res: Response) => {
+const viewBlog = asyncHandler ( async (req: Request, res: Response) => {
   try {
     const post = await Post.findById(req.params.id);
     res.status(200).json(post);
   } catch (err) {
     res.status(500).json(err);
   }
-};
+});
 
 //GET ALL POSTS
-const viewBlogs = async (req: Request, res: Response) => {
+const viewBlogs = asyncHandler ( async (req: Request, res: Response) => {
   const userTitle = req.query.title;
   const catName = req.query.category;
   try {
@@ -106,9 +107,9 @@ const viewBlogs = async (req: Request, res: Response) => {
   } catch (err) {
     res.status(500).json(err);
   }
-};
+});
 
-const commentPost = async (req: Request, res: Response) => {
+const commentPost =asyncHandler( async (req: Request, res: Response) => {
 
 
 const validSchema = commentSchema.validate(req.body);
@@ -147,6 +148,6 @@ try {
 } catch (err) {
   res.status(500).json(err);
 }
-};
+});
 
 export { createBlog, deleteBlog, editBlog, viewBlog, viewBlogs, commentPost };

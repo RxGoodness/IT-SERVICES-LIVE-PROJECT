@@ -1,5 +1,5 @@
 import request from "supertest";
-const app = require("../app");
+import app from "../app";
 
 describe("enter emil for password reset", () => {
   it("enter email", async () => {
@@ -9,7 +9,5 @@ describe("enter emil for password reset", () => {
         email: "example@email.com",
       })
       .expect(400);
-
-    console.log(response);
   });
 });
