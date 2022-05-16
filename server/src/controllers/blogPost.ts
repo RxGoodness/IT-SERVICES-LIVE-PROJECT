@@ -3,39 +3,22 @@ import { Request, Response } from "express";
 import {createSchema, editSchema , commentSchema} from "../config/blogSchema"
 import asyncHandler from "express-async-handler"
 
+
 //CREATE POST
 const createBlog =  asyncHandler (async (req: Request, res: Response) => {
-
-  const validSchema = createSchema.validate(req.body);
-  if (validSchema.error) {
-    res.status(400).send(validSchema.error.details[0].message);
-  }
-
-
+  await createSchema.validateAsync(req.body);
   const newPost = new Post(req.body);
-  try {
-    const savedPost = await newPost.save();
-    res.status(200).json(savedPost);
-  } catch (err) {
-    res.status(500).json(err);
-  }
+  const savedPost = await newPost.save();
+  res.status(200).json(savedPost);
 });
 
 //UPDATE POST
 const editBlog = asyncHandler (async (req: Request, res: Response) => {
-  try{
   
-  const validSchema = editSchema.validate(req.body);
-  if (validSchema.error) {
-    res.status(400).send(validSchema.error.details[0].message);
-  }
-  
+    await editSchema.validateAsync(req.body);
     const post = await Post.findOne({id: req.params.id});
-    console.log(post.id)
-    
 
     if (post) {
-      try {
         const updatedPost = await Post.findOneAndUpdate(
           {id: req.params.id},
           {
@@ -44,17 +27,10 @@ const editBlog = asyncHandler (async (req: Request, res: Response) => {
           { new: true }
         );
         res.status(200).json(updatedPost);
-      } catch (err) {
-        res.status(500).json(err);
-      }
     } else {
       res.status(401).json("You can update only your post!");
     }
-  }
-    catch (err) {
-      res.status(500).json(err);
-    }
-  })
+})  
 
   
 //DELETE POST
@@ -82,7 +58,7 @@ const viewBlog = asyncHandler ( async (req: Request, res: Response) => {
     const post = await Post.findById(req.params.id);
     res.status(200).json(post);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json("Error getting BlogPost");
   }
 });
 
@@ -112,18 +88,11 @@ const viewBlogs = asyncHandler ( async (req: Request, res: Response) => {
 const commentPost =asyncHandler( async (req: Request, res: Response) => {
 
 
-const validSchema = commentSchema.validate(req.body);
+  await commentSchema.validateAsync(req.body);
 
-if (validSchema.error) {
-  res.status(400).send(validSchema.error.details[0].message);
-}
-
-try {
   const post = await Post.findOne({
     _id: req.params.id});
-  console.log(post)
   if (post) {
-    try {
       const commentedPost = await Post.findOneAndUpdate(
         {_id: req.params.id},
         {
@@ -139,15 +108,10 @@ try {
       console.log(post)
 
       res.status(200).json(commentedPost);
-    } catch (err) {
-      res.status(500).json(err);
-    }
+  
   } else {
-    res.status(401).json("comment not succesful");
+    res.status(401).json("error commenting on post");
   }
-} catch (err) {
-  res.status(500).json(err);
-}
 });
 
 export { createBlog, deleteBlog, editBlog, viewBlog, viewBlogs, commentPost };
