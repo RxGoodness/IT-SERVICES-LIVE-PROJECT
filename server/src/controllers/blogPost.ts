@@ -1,19 +1,11 @@
 import { Post } from "../models/blogModel";
 import { Request, Response } from "express";
-import Joi from "joi";
+import {createSchema, editSchema, commentSchema} from "../config/blogSchema"
 
 //CREATE POST
 const createBlog = async (req: Request, res: Response) => {
-  const schema = Joi.object({
-    title: Joi.string().required(),
-    message: Joi.string().required(),
-    summary: Joi.string().required(),
-    category: Joi.string().required(),
-    description: Joi.string().required(),
-    comment: Joi.string(),
-    username:Joi.string()
-  });
-  const validSchema = schema.validate(req.body);
+
+  const validSchema = createSchema.validate(req.body);
   if (validSchema.error) {
     res.status(400).send(validSchema.error.details[0].message);
   }
@@ -31,22 +23,12 @@ const createBlog = async (req: Request, res: Response) => {
 //UPDATE POST
 const editBlog = async (req: Request, res: Response) => {
   try{
- 
-  const schema = Joi.object({
-    title: Joi.string().required(),
-    message: Joi.string().required(),
-    summary: Joi.string().required(),
-    category: Joi.string().required(),
-    description: Joi.string().required(),
-    username:Joi.string()
-  });
   
-  const validSchema = schema.validate(req.body);
+  const validSchema = editSchema.validate(req.body);
   if (validSchema.error) {
     res.status(400).send(validSchema.error.details[0].message);
   }
   
-
     const post = await Post.findOne({id: req.params.id});
     console.log(post.id)
     
@@ -127,15 +109,9 @@ const viewBlogs = async (req: Request, res: Response) => {
 };
 
 const commentPost = async (req: Request, res: Response) => {
-const schema = Joi.object().keys({
-  comments: Joi.object().keys({
-      name: Joi.string().required(),
-      email: Joi.string().required(), 
-      comment: Joi.string().required(), 
-    })
-  })
 
-const validSchema = schema.validate(req.body);
+
+const validSchema = commentSchema.validate(req.body);
 
 if (validSchema.error) {
   res.status(400).send(validSchema.error.details[0].message);
@@ -151,9 +127,9 @@ try {
         {_id: req.params.id},
         {
           $push: 
-          {"comments": {name: req.body.comments.name, 
-            email:req.body.comments.email,
-            comment:req.body.comments.comment
+          {"comments": {name: req.body.name, 
+            email:req.body.email,
+            comment:req.body.comment
           }}
           
         },
