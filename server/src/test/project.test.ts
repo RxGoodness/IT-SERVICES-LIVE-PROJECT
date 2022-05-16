@@ -1,6 +1,6 @@
 const request = require("supertest");
 import projectDb from "../models/project";
-const app = require("../app");
+import app from "../app";
 import ownerDb from "../models/admin.schema";
 // import mongoose from "mongoose";
 
@@ -53,7 +53,7 @@ describe("project creation", () => {
         overview: "hello",
       })
       .expect(400);
-    expect(response.body[0]).toHaveProperty("message");
+    expect(response.body).toHaveProperty("msg");
   });
 });
 
@@ -121,6 +121,6 @@ describe("project update", () => {
         name: "testUpdate",
       })
       .expect(400);
-    expect(updated.body[0]).toHaveProperty("message");
+    expect(updated.body).toHaveProperty("msg");
   });
 });

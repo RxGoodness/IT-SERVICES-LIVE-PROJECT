@@ -7,12 +7,11 @@ export const createService = async (
 ) => {
   const { category, subDescription, image, description, bestFeature, technologies, pricePackages } =
     req.body;
-    console.log(req.body)
   const file = req.file;
-  console.log(file)
 
   if (!file) {
-    return res.status(400).send('No image in the request');
+    res.status(400);
+    throw new Error('No image in the request')
   }
 
   try {
@@ -37,7 +36,8 @@ export const createService = async (
     });
     return res.status(201).json(newService);
   } catch (error) {
-    return res.status(404).json(error);
+    res.status(400);
+    throw new Error("Service not created");
   }
 };
 
@@ -86,20 +86,18 @@ export const updateService = async (
 
     res.status(200).json({ msg: 'Service updated successfully' });
   } catch (error) {
-    res.status(404).json(error);
+    res.status(400);
+    throw new Error("Service not updated");
   }
 };
 
 export const deleteService = async (req: Request, res: Response) => {
   const ownerId = req.params.id;
-  try {
-    const deleted = await Service.findByIdAndDelete(ownerId);
-    if (!deleted) {
-      return res.status(404).json({ msg: 'Service not found' });
-    } else {
-      return res.status(200).json({ msg: deleted });
-    }
-  } catch (error) {
-    return res.status(500).json(error);
+  const deleted = await Service.findByIdAndDelete(ownerId);
+  if (!deleted) {
+    res.status(404);
+    throw new Error('Service not found');
+  } else {
+    return res.status(200).json({ msg: deleted });
   }
 };

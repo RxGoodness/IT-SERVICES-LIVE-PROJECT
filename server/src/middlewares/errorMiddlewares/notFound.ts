@@ -1,5 +1,6 @@
+import { Request, Response } from "express";
+const notFoundMiddleware = (_req: Request, res: Response) => {
+  res.status(404).json({ msg: "Route does not exist" });
+};
 
-import {Request, Response} from "express"
-export const notFoundMiddleware = (_req:Request, res:Response) => {
-res.status(404).send("Route Not Found")
-}
+export default notFoundMiddleware;
