@@ -30,8 +30,7 @@ const contactMessage = asyncHandler(
             })
 
         } catch (error) {
-            res.status(400);
-            throw new Error("Message not sent")
+            res.status(400).json({ msg: "Message not sent" })
         }
     }
 )
@@ -43,8 +42,7 @@ const deleteNotification = asyncHandler(
         const deletedNotification = await ContactMessages.findByIdAndRemove({ _id: req.params.id })
 
         if (!deletedNotification) {
-            res.status(400);
-            throw new Error("Message not found in database")
+            res.status(400).json({ msg: "Message not found in database" })
         } else {
             res.status(200).json({ message: "Notification deleted Successfully" })
         }
@@ -59,8 +57,7 @@ const viewNotifications = asyncHandler(
             const notifications = await ContactMessages.find(params)
             res.status(200).json(notifications)
         } catch (error) {
-            res.status(400)
-            throw new Error("Message not found")
+            res.status(400).json({ msg: "Message not found" })
         }
     }
 )

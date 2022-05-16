@@ -23,8 +23,8 @@ const createAdmin = asyncHandler(
     await AdminDB.create({ ...data, email, password: securedPass });
     const token = genToken({ email });
     return res.status(200).json({ token });
-  })
-
+  }
+);
 
 const loginAdmin = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
@@ -36,8 +36,7 @@ const loginAdmin = asyncHandler(
       const token = genToken({ email });
       return res.status(200).json({ token });
     } else {
-      res.status(401)
-      throw new Error("Invalid credentials");
+      res.status(401).json({ msg: "Invalid credentials" });
     }
   }
 );

@@ -10,15 +10,17 @@ import {
   validateId,
 } from "../repository/job_repository";
 import CreateJob from "../models/createJobSchema";
-import jobApp from "../models/jobApplication";
+import jobApp from "../models/jobApplication"
+
 
 const createJob = asyncHandler(
-  async (req: Record<string, any>, res: Response): Promise<any> => {
+  async (req: Record<string, any>, res: Response) => {
     const file = req.file;
     const checkfile = await validateImageFile(file);
 
     if (checkfile) {
-      return res.status(400).json({ msg: checkfile });
+      res.status(400);
+      throw new Error(checkfile);
     }
 
     try {
@@ -38,8 +40,7 @@ const createJob = asyncHandler(
       await createJob_Repo(crtJobs, res);
     } catch (error: any) {
       await unlink(req.file.path);
-      res.status(500);
-      throw new Error(error.message || "Job not created");
+      res.status(500).json({ msg: error.message || "Job not created" });
     }
   }
 );
@@ -86,16 +87,14 @@ const updateCreatedJob = asyncHandler(async (req: Request, res: Response) => {
     res.status(200).send(updateJob);
   } catch (error) {
     await unlink(file.path);
-    res.status(404);
-    throw new Error("Job not updated");
+    res.status(404).json({ msg: "Job not updated" });
   }
 });
 
 const deleteCreatedJob = asyncHandler(async (req: Request, res: Response) => {
   const deletedJob = await findAndRemoveId_Repo(req.params.id);
   if (!deletedJob) {
-    res.status(404);
-    throw new Error("Job not found");
+    res.status(404).json({ msg: "Job not found" });
   } else {
     res.status(200).json({
       message: "Job deleted successfully",

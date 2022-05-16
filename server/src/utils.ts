@@ -1,13 +1,16 @@
 import nodemailer from "nodemailer";
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> main
 //send Email
 async function sendEmail(email: any, subject: any, text: any) {
   let transport = nodemailer.createTransport({
     service: process.env.SERVICE,
     auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASS,
+      user: process.env.MAIL_USERNAME,
+      pass: process.env.MAIL_PASSWORD,
     },
   });
 
@@ -26,7 +29,7 @@ async function sendEmail(email: any, subject: any, text: any) {
       } else {
         console.log("Email sent to user " + info.response);
       }
-    },
+    }
   );
 }
 
@@ -34,5 +37,5 @@ export const validateImageFile = async (file: string) => {
   if (!file) {
     return "No image in the request";
   }
-}
+};
 export { sendEmail };
