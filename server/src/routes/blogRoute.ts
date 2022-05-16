@@ -7,13 +7,14 @@ import {
   viewBlogs,
   commentPost,
 } from "../controllers/blogPost";
+import protect from "../middlewares/protectRoute";
 const blogRouter = express.Router();
 
 blogRouter.get("/:id", viewBlog);
 blogRouter.get("/", viewBlogs);
-blogRouter.post("/", createBlog);
-blogRouter.post("/comment/:id/", commentPost);
-blogRouter.put("/:id", editBlog);
-blogRouter.delete("/:id", deleteBlog);
+blogRouter.post("/create", protect, createBlog);
+blogRouter.post("/comment/:id/", protect, commentPost);
+blogRouter.put("/:id", protect, editBlog);
+blogRouter.delete("/:id", protect, deleteBlog);
 
 export default blogRouter;
