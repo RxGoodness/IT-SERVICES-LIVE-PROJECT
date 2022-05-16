@@ -23,7 +23,7 @@ const enterEmail = asyncHandler(
 
     //create token
     const webToken = jwt.sign({ user }, secret, { expiresIn: "15m" });
-    console.log(webToken);
+    // console.log(webToken);
 
     const link = `${process.env.BASE_URL}/reset-password/${user._id}/${webToken}`;
     await sendEmail(user.email, "Password Reset", link);

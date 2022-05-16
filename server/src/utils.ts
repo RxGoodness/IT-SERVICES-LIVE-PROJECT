@@ -1,34 +1,5 @@
 import nodemailer from "nodemailer";
-/**
- ***Joi Error formatter***
 
-interface JoiError {
-  message: string;
-  path?: string[];
-  type?: string;
-  context?: Record<string, string>;
-}
-
-export const formatError = (errors: JoiError[]) => {
-  errors.map((err) => {
-    delete err.path;
-    delete err.context;
-    delete err.type;
-  });
-
-  return errors;
-};
-
-export interface FinalError {
-  original: Object;
-  details: JoiError[];
-}
-
-export const transform = (message: string) => {
-  const result = message.split(`\"`).join('');
-  return result;
-};
- */
 
 //send Email
 async function sendEmail(email: any, subject: any, text: any) {
