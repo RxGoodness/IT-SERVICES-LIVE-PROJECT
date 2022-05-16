@@ -151,4 +151,14 @@ const commentPost = asyncHandler(
   }
 )
 
-export { createBlog, deleteBlog, editBlog, viewBlog, viewBlogs, commentPost };
+const latestPost = asyncHandler(async (req: Request, res: Response) => {
+  const latest = await Post.find().sort({createdAt: -1}).limit(6)
+  res.status(200).json(latest);
+})
+
+const topBlogPost = asyncHandler(async (req: Request, res: Response) => {
+  const topPost = await Post.find().sort({comments: -1}).limit(6)
+  res.status(200).json(topPost);
+})
+
+export { createBlog, deleteBlog, editBlog, viewBlog, viewBlogs, commentPost, latestPost, topBlogPost };

@@ -6,8 +6,13 @@ import {
   viewBlog,
   viewBlogs,
   commentPost,
+  latestPost,
+  topBlogPost,
 } from "../controllers/blogPost";
 const blogRouter = express.Router();
+
+blogRouter.get("/latest", latestPost);
+blogRouter.get("/top", topBlogPost);
 
 blogRouter.get("/:id", viewBlog);
 blogRouter.get("/", viewBlogs);
