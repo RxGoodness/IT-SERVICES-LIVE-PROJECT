@@ -4,7 +4,10 @@ import asyncHandler from "express-async-handler";
 
 const schema = Joi.object({
   category: Joi.string().required(),
-  subcategory: Joi.array().items(Joi.string()).required(),
+  subcategory: Joi.object({
+    subDescription: Joi.string().required(),
+    images: Joi.array().items(Joi.string()).required(),
+  }),
   description: Joi.string().required(),
   bestFeature: Joi.string().required(),
   technologies: Joi.string().required(),
@@ -19,3 +22,4 @@ export const validateService = asyncHandler(
     next()
   }
 )
+
