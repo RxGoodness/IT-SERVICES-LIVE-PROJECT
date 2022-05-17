@@ -111,8 +111,7 @@ export const deleteService = async (req: Request, res: Response) => {
   const ownerId = req.params.id;
   const deleted = await Service.findByIdAndDelete(ownerId);
   if (!deleted) {
-    res.status(404);
-    throw new Error('Service not found');
+    res.status(404).json({ msg: "Service not found" });
   } else {
     return res.status(200).json({ msg: deleted });
   }
