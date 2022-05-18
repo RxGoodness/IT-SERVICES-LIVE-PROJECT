@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { unlink } from "fs/promises";
 import asyncHandler from "express-async-handler";
 import { validateImageFile } from "../utils";
+import { deleteFile } from "../middlewares/process.documents";
+import { sendEmail } from "../utils";
 import {
   createJob_Repo,
   findAndRemoveId_Repo,
@@ -10,6 +12,7 @@ import {
   validateId,
 } from "../repository/job_repository";
 import CreateJob from "../models/createJobSchema";
+import jobApp from "../models/jobApplication";
 
 const createJob = asyncHandler(
   async (req: Record<string, any>, res: Response) => {
@@ -105,4 +108,63 @@ const getAllJobs = asyncHandler(async (_req: Request, res: Response) => {
   res.status(200).json(data);
 });
 
-export { createJob, updateCreatedJob, deleteCreatedJob, getAllJobs };
+const getJob = asyncHandler(async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const data = await CreateJob.find({ id });
+    data
+      ? res.status(200).json({ data })
+      : res.status(404).json({ msg: "Invalid input" });
+  } catch (error) {
+    res.status(404);
+    throw new Error("Job not found");
+  }
+});
+
+const jobApplication = asyncHandler(async (req: Request, res: Response) => {
+  let CVPath = "";
+  let CVFilename = "";
+  let coverLetterPath = "";
+  let coverLetterFilename = "";
+  try {
+    req.files.map((file) => {
+      if (file.fieldname === "coverLetter") {
+        coverLetterPath = file.path;
+        coverLetterFilename = file.filename;
+      }
+      if (file.fieldname === "CV") {
+        CVPath = file.path;
+        CVFilename = file.filename;
+      }
+    });
+    const data = {
+      ...req.body,
+      CV: CVPath,
+      coverLetter: coverLetterPath,
+    };
+    const created = await jobApp.create({
+      ...data,
+    });
+    if (created) {
+      await sendEmail(
+        req.body.email,
+        "Job Application from Appoga",
+        `You have successfully applied for a job with id ${req.body.jobAppId}`
+      );
+      res.status(201).json({ msg: "Application successful" });
+    }
+  } catch (error) {
+    [CVFilename, coverLetterFilename].map((each) => deleteFile(each));
+    res.status(404);
+    throw new Error("Please provide all fields");
+  }
+});
+
+export {
+  createJob,
+  updateCreatedJob,
+  deleteCreatedJob,
+  getAllJobs,
+  getJob,
+  jobApplication,
+};

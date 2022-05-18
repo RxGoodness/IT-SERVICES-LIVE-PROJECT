@@ -12,25 +12,16 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: async (_req, _file) => {
     return {
-      folder: "DEV",
-      allowed_formats: ["png", "jpeg", "jpg"],
-  
+      folder: "FILE",
+      allowed_formats: ["pdf", "docx", "doc"],
+   
     };
   },
 });
 
 //Function to delete image if any error
-export const deleteImg = async (id: string) => {
+export const deleteFile = async (id: string) => {
   return cloudinary.uploader.destroy(id);
 };
-
-//Function to delete image when running update or delete
-export function deleteUpdateImage(imageLink: string) {
-  const splittedArray = imageLink.split("/");
-  const imageName = splittedArray[splittedArray.length - 1].split(".")[0];
-  const imageFolder = splittedArray[splittedArray.length - 2];
-  deleteImg(`${imageFolder}/${imageName}`);
-}
-
 
 export default multer({ storage });

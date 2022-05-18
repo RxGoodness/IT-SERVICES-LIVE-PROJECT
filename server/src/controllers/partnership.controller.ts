@@ -5,6 +5,7 @@ import { PartnershipSchema } from "../config/parnership.validator";
 import PartnersDB from "../models/partnership.schema";
 import { deleteImg } from "../middlewares/process.image";
 
+import { sendEmail } from "../utils";
 const requestPartnership = asyncHandler(async (req: Request, res: Response) => {
   try {
     const data = { ...req.body, logo: req.file!.path };
@@ -18,4 +19,45 @@ const requestPartnership = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
-export { requestPartnership };
+const updatePartnership = asyncHandler(async (req: Request, res: Response) => {
+  const { status } = req.body;
+  const id = req.params.id;
+  const isExist = await PartnersDB.findById(id)
+  if (!isExist) {
+    res.status(404).json({ msg: "This user does not exist" })
+    return;
+  }
+  if (status === "Approved") {
+    const data = await PartnersDB.findOneAndUpdate({ _id: id }, { status: "Approved" }, {
+      new: true,
+      runValidators: true,
+    })
+    const { email, status } = await PartnersDB.findById(id);
+    sendEmail(email, "Partnership request", "Your partnership request has been approved")
+    res.status(200).json(data)
+    return
+  }
+  if (status === "Declined") {
+    const data = await PartnersDB.findOneAndUpdate({ _id: id }, { status: "Declined" }, {
+      new: true,
+      runValidators: true,
+    })
+    res.status(200).json(data)
+    return
+  }
+})
+
+const deletePartnership = asyncHandler(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const isExist = await PartnersDB.findById(id)
+  if (!isExist) {
+    res.status(404).json({ msg: "This user does not exist" })
+    return;
+  }
+  await PartnersDB.deleteOne({ _id: id })
+  res.status(200).json({ msg: "Deleted Successfully" })
+})
+
+
+
+export { requestPartnership, updatePartnership, deletePartnership };
