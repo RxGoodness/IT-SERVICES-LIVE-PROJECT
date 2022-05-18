@@ -30,12 +30,12 @@ const project = Joi.object({
   profileLink: Joi.string().required().uri().messages({
     profileLink: `Please enter a valid url`,
   }),
-  CV: Joi.string().messages({
-    CV: `should be a string`,
-  }),
-  coverLetter: Joi.string().messages({
-    coverLetter: `should be a string`,
-  }),
+  // CV: Joi.string().messages({
+  //   CV: `should be a string`,
+  // }),
+  // coverLetter: Joi.string().messages({
+  //   coverLetter: `should be a string`,
+  // }),
   jobAppId: Joi.string().required().messages({
     jobAppId: `should be a string`,
   }),

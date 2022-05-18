@@ -6,6 +6,7 @@ const JobApplication = new Schema(
   {
     firstName: {
       type: String,
+      required: true,
     },
     surname: { type: String, required: true },
     DOB: { type: String, required: true },

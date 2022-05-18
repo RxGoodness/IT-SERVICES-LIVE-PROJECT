@@ -1,14 +1,17 @@
 import { Request, Response } from "express";
 import projectDb from "../models/project";
 import asyncHandler from "express-async-handler";
+import { deleteImg, deleteUpdateImage} from "../middlewares/process.image";
+
 
 export const createProject = asyncHandler(
   async (req: Request, res: Response) => {
     try {
-      const { name, overview, editor } = req.body;
-      const data = await projectDb.create({ name, overview, editor });
+      const input = { ...req.body, featuredImage: req.file!.path };
+      const data = await projectDb.create({ ...input });
       res.status(201).json(data);
     } catch (error) {
+      deleteImg(req.file!.filename);
       res.status(404).json({ msg: "Please input right details" });
     }
   }
@@ -18,27 +21,37 @@ export const deleteProject = asyncHandler(
   async (req: Request, res: Response) => {
     try {
       const idFromOwner = req.params.id;
-      const data = await projectDb.deleteOne({ id: idFromOwner });
-      data.deletedCount
-        ? res.status(200).json({ message: "successfully deleted" })
-        : res.status(404).json({ message: "Already deleted" });
+      const data = await projectDb.findByIdAndDelete(idFromOwner);
+      if (data.featuredImage) {
+        deleteUpdateImage(data.featuredImage);
+      }
+      if (data) {
+        res.status(200).json({ message: "successfully deleted" });
+        return;
+      }
     } catch (error) {
-      res.status(404).json({ msg: "Please input right details" });
+      res.status(404).json({ msg: "Not Found" });
+      return;
     }
   }
 );
+
+
 
 export const updateProject = asyncHandler(
   async (req: Request, res: Response) => {
     try {
       const idFromOwner = req.params.id;
-      const { name, overview, editor } = req.body;
+      const prevData = await projectDb.findOne({ id: idFromOwner });
+      if (req.file) {
+        deleteUpdateImage(prevData.featuredImage);
+      }
+      const img = req.file?.path;
       const data = await projectDb.findOneAndUpdate(
         { id: idFromOwner },
-        { name, overview, editor },
+        { featuredImage: img, ...req.body },
         {
           new: true,
-          runValidators: true,
         }
       );
       res.status(200).json({ data });
@@ -47,3 +60,5 @@ export const updateProject = asyncHandler(
     }
   }
 );
+
+
