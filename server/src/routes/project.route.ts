@@ -7,6 +7,8 @@ import {
   createProject,
   updateProject,
   deleteProject,
+  getAllProject,
+  getSingleProject,
 } from "../controllers/project";
 
 import protect from "../middlewares/protectRoute";
@@ -26,5 +28,7 @@ router.put(
   updateProject
 );
 router.delete("/:id", protect, deleteProject);
+router.get("/", protect, getAllProject)
+router.get("/:id", protect, getSingleProject)
 
 export default router;

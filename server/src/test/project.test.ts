@@ -4,7 +4,9 @@ import app from "../app";
 import ownerDb from "../models/admin.schema";
 // import mongoose from "mongoose";
 // const ownerId = new mongoose.Types.ObjectId()
-let token: string;
+
+let token:string;
+
 const owner = {
   firstName: "ken",
   lastName: "osagie",
@@ -16,22 +18,25 @@ const owner = {
 const projectOne = {
   name: "test",
   overview: "hello",
-  editor: "hey",
-  featuredImage: "testFile.jpg",
+  editor: "hey"
 };
 beforeEach(async () => {
   await projectDb.deleteMany();
   await ownerDb.deleteMany();
 });
+
 beforeAll(async () => {
   const ownerResponse = await request(app).post("/admin/create").send(owner);
-  token = ownerResponse.body.token;
+  token = ownerResponse.body.token
 });
+
+
 describe("project creation", () => {
   it("check for creation of project without authorization", async () => {
     await request(app).post("/projects").send(projectOne).expect(401);
   });
   it("check for creation", async () => {
+    // const ownerResponse = await request(app).post("/admin/create").send(owner);
     const response = await request(app)
       .post("/projects")
       .set("Authorization", `Bearer ${token}`)
@@ -42,6 +47,7 @@ describe("project creation", () => {
     expect(response.body.name).toEqual("test");
   });
   it("check for creation if editor is omitted", async () => {
+    // const ownerResponse = await request(app).post("/admin/create").send(owner);
     const response = await request(app)
       .post("/projects")
       .set("Authorization", `Bearer ${token}`)
@@ -68,6 +74,7 @@ describe("project deleted", () => {
 });
 describe("project deletion more than once", () => {
   it("check for right message when trying to delete project that has been deleted", async () => {
+    // const ownerResponse = await request(app).post("/admin/create").send(owner);
     const response = await request(app)
       .post("/projects")
       .set("Authorization", `Bearer ${token}`)
@@ -84,6 +91,7 @@ describe("project deletion more than once", () => {
 });
 describe("project update", () => {
   it("check for all field update ", async () => {
+    // const ownerResponse = await request(app).post("/admin/create").send(owner);
     const response = await request(app)
       .post("/projects")
       .set("Authorization", `Bearer ${token}`)
@@ -115,3 +123,21 @@ describe("project update", () => {
   });
 });
 
+
+describe("get all project", () => {
+  it("it checked for all get project", async () => {
+    const response = await request(app).get("/projects")
+    .set("Authorization", `Bearer ${token}`);
+    expect(response.body).toHaveLength(0);
+    expect(response.status).toBe(200);
+  })
+}) 
+
+describe("get a single project", () => {
+  it("it checked for just a get project", async () => {
+    const response = await request(app).get("/projects/jhh")
+    .set("Authorization", `Bearer ${token}`);
+    // expect(response.body.params.id).toHaveLength(0);
+    expect(response.status).toBe(400);
+  })
+})
