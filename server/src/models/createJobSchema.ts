@@ -9,6 +9,11 @@ const createJobSchema = new Schema({
         type: String,
         required: true
     },
+    cloudinaryId: {
+        type: String,
+        required: true,
+        select: false
+    },
     location: {
         type: String,
         required: true

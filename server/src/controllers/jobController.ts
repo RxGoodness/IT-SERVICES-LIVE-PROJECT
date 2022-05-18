@@ -8,76 +8,93 @@ import {
   createJob_Repo,
   findAndRemoveId_Repo,
   findIdAndUpdate_Repo,
+  findOneItem,
   getJobsById,
   validateId,
 } from "../repository/job_repository";
 import CreateJob from "../models/createJobSchema";
 import jobApp from "../models/jobApplication";
+import cloudinary from "../config/cloudinary";
+import { deleteImg } from "../middlewares/process.image";
 
 const createJob = asyncHandler(
   async (req: Record<string, any>, res: Response) => {
-    const file = req.file;
-    const checkfile = await validateImageFile(file);
-
-    if (checkfile) {
-      res.status(400);
-      throw new Error(checkfile);
-    }
-
     try {
+      const file = req.file;
+      const checkfile = await validateImageFile(file);
+    
+      if (checkfile) {
+        res.status(400);
+        throw new Error(checkfile);
+      }
+
+      // upload image to cloudinary
+      const result = await cloudinary.uploader
+      .upload(file.path, {
+        folder: "DEV",
+      });
+
+      // Create a new job
       const { title, location, employmentType, description } = req.body;
-      const fileName = req.file.filename;
-      const basePath = `${req.protocol}://${req.get(
-        "host"
-      )}/public/uploads/${fileName}`;
       const crtJobs = {
         title,
-        image: basePath,
+        image: result.secure_url,
+        cloudinaryId: result.public_id,
         location,
         employmentType,
         description,
       };
 
       await createJob_Repo(crtJobs, res);
+      
     } catch (error: any) {
-      await unlink(req.file.path);
+      deleteImg(req.file.filename);
       res.status(500).json({ msg: error.message || "Job not created" });
     }
   }
 );
 
 const updateCreatedJob = asyncHandler(async (req: Request, res: Response) => {
-  const file: any = req.file;
-  let imagepath: unknown;
-
-  const checkIdExists = await validateId(req.params.id);
-
-  if (!checkIdExists) {
-    res.status(400);
-    throw new Error("Invalid Job Id");
-  }
-
-  const jobs = await getJobsById(req.params.id);
-
-  if (!jobs) {
-    res.status(404);
-    throw new Error("Job not found");
-  }
-
-  if (file) {
-    const fileName = file.filename;
-    const basePath = `${req.protocol}://${req.get(
-      "host"
-    )}/public/uploads/${fileName}`;
-    imagepath = basePath;
-  } else {
-    imagepath = jobs.image;
-  }
-
   try {
+    const file = req.file;
+    let newImagePath: unknown;
+    let newCloudinaryId: unknown;
+
+    const checkIdExists = await validateId(req.params.id);
+
+    if (!checkIdExists) {
+      res.status(400);
+      throw new Error("Invalid Job Id");
+    }
+
+    const jobs = await getJobsById(req.params.id);
+    const select_cloud_id = await findOneItem(req.params.id);
+    
+
+    if (!jobs) {
+      res.status(404);
+      throw new Error("Job not found");
+    }
+
+    if (file) {
+      // Delete image from Cloudinary
+      await cloudinary.uploader.destroy(select_cloud_id.cloudinaryId);
+      // Upload image to cloudinary
+      let result = await cloudinary.uploader.upload(file.path, {
+        folder: "DEV",
+      })
+      newImagePath = result.secure_url;
+      newCloudinaryId = result.public_id;
+    } else {
+      newImagePath = jobs.image;
+      newCloudinaryId = select_cloud_id.cloudinaryId
+    }
+
+  
     const checkAndUpdate: Record<string, any> = {
       title: req.body.title || jobs.title,
-      image: imagepath,
+      image: newImagePath,
+      cloudinaryId: newCloudinaryId,
       location: req.body.location || jobs.location,
       employmentType: req.body.employmentType || jobs.employmentType,
       description: req.body.description || jobs.description,
@@ -87,19 +104,24 @@ const updateCreatedJob = asyncHandler(async (req: Request, res: Response) => {
 
     res.status(200).send(updateJob);
   } catch (error) {
-    await unlink(file.path);
     res.status(404).json({ msg: "Job not updated" });
   }
 });
 
 const deleteCreatedJob = asyncHandler(async (req: Request, res: Response) => {
-  const deletedJob = await findAndRemoveId_Repo(req.params.id);
-  if (!deletedJob) {
-    res.status(404).json({ msg: "Job not found" });
-  } else {
-    res.status(200).json({
-      message: "Job deleted successfully",
-    });
+  try {
+    const select_cloud_id = await findOneItem(req.params.id);
+    const deletedJob = await findAndRemoveId_Repo(req.params.id);
+    if (!deletedJob) {
+      res.status(404).json({ msg: "Job not found" });
+    } else {
+      await cloudinary.uploader.destroy(select_cloud_id.cloudinaryId);
+      res.status(200).json({
+        msg: "Job deleted successfully",
+      });
+    }
+  } catch (error: any) {
+    throw new Error(error)
   }
 });
 
