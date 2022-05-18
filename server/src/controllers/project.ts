@@ -51,3 +51,27 @@ export const updateProject = asyncHandler(
     }
   }
 )
+
+
+export const getAllProject = asyncHandler (
+  async (req: Request, res: Response) => {
+    try {
+      const caseStudy = await projectDb.find();
+      res.status(200).json(caseStudy);
+    } catch (error) {
+      res.status(404)
+    }
+  }
+)
+
+export const getSingleProject = asyncHandler (
+  async (req: Request, res: Response) => {
+    try {
+      const projectId = req.params.id;
+      const project = await projectDb.findOne({_id: projectId});
+      res.status(200).json(project)
+    } catch (error) {
+      res.status(400).json({msg: "Project not found"})
+    }
+  }
+)
