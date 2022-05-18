@@ -1,11 +1,10 @@
 import { Post } from "../models/blogModel";
 import { Request, Response } from "express";
-import {createSchema, editSchema , commentSchema} from "../config/blogSchema"
-import asyncHandler from "express-async-handler"
-
+import { createSchema, editSchema, commentSchema } from "../config/blogSchema";
+import asyncHandler from "express-async-handler";
 
 //CREATE POST
-const createBlog =  asyncHandler (async (req: Request, res: Response) => {
+const createBlog = asyncHandler(async (req: Request, res: Response) => {
   await createSchema.validateAsync(req.body);
   const newPost = new Post(req.body);
   const savedPost = await newPost.save();
@@ -13,28 +12,26 @@ const createBlog =  asyncHandler (async (req: Request, res: Response) => {
 });
 
 //UPDATE POST
-const editBlog = asyncHandler (async (req: Request, res: Response) => {
-  
-    await editSchema.validateAsync(req.body);
-    const post = await Post.findOne({id: req.params.id});
+const editBlog = asyncHandler(async (req: Request, res: Response) => {
+  await editSchema.validateAsync(req.body);
+  const post = await Post.findOne({ id: req.params.id });
 
-    if (post) {
-        const updatedPost = await Post.findOneAndUpdate(
-          {id: req.params.id},
-          {
-            $set: req.body,
-          },
-          { new: true }
-        );
-        res.status(200).json(updatedPost);
-    } else {
-      res.status(401).json("You can update only your post!");
-    }
-})  
+  if (post) {
+    const updatedPost = await Post.findOneAndUpdate(
+      { id: req.params.id },
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedPost);
+  } else {
+    res.status(401).json("You can update only your post!");
+  }
+});
 
-  
 //DELETE POST
-const deleteBlog = asyncHandler (async (req: Request, res: Response) => {
+const deleteBlog = asyncHandler(async (req: Request, res: Response) => {
   try {
     const post = await Post.findById(req.params.id);
     if (post) {
@@ -53,7 +50,7 @@ const deleteBlog = asyncHandler (async (req: Request, res: Response) => {
 });
 
 //GET POST
-const viewBlog = asyncHandler ( async (req: Request, res: Response) => {
+const viewBlog = asyncHandler(async (req: Request, res: Response) => {
   try {
     const post = await Post.findById(req.params.id);
     res.status(200).json(post);
@@ -63,7 +60,7 @@ const viewBlog = asyncHandler ( async (req: Request, res: Response) => {
 });
 
 //GET ALL POSTS
-const viewBlogs = asyncHandler ( async (req: Request, res: Response) => {
+const viewBlogs = asyncHandler(async (req: Request, res: Response) => {
   const userTitle = req.query.title;
   const catName = req.query.category;
   try {
@@ -85,33 +82,51 @@ const viewBlogs = asyncHandler ( async (req: Request, res: Response) => {
   }
 });
 
-const commentPost =asyncHandler( async (req: Request, res: Response) => {
-
-
+const commentPost = asyncHandler(async (req: Request, res: Response) => {
   await commentSchema.validateAsync(req.body);
 
   const post = await Post.findOne({
-    _id: req.params.id});
+    _id: req.params.id,
+  });
   if (post) {
-      const commentedPost = await Post.findOneAndUpdate(
-        {_id: req.params.id},
-        {
-          $push: 
-          {"comments": {name: req.body.name, 
-            email:req.body.email,
-            comment:req.body.comment
-          }}
-          
+    const commentedPost = await Post.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $push: {
+          comments: {
+            name: req.body.name,
+            email: req.body.email,
+            comment: req.body.comment,
+          },
         },
-        { new: true }
-      );
-      console.log(post)
+      },
+      { new: true }
+    );
+    console.log(post);
 
-      res.status(200).json(commentedPost);
-  
+    res.status(200).json(commentedPost);
   } else {
     res.status(401).json("error commenting on post");
   }
 });
 
-export { createBlog, deleteBlog, editBlog, viewBlog, viewBlogs, commentPost };
+const latestPost = asyncHandler(async (req: Request, res: Response) => {
+  const latest = await Post.find().sort({ createdAt: -1 }).limit(6);
+  res.status(200).json(latest);
+});
+
+const topBlogPost = asyncHandler(async (req: Request, res: Response) => {
+  const topPost = await Post.find().sort({ comments: -1 }).limit(6);
+  res.status(200).json(topPost);
+});
+
+export {
+  createBlog,
+  deleteBlog,
+  editBlog,
+  viewBlog,
+  viewBlogs,
+  commentPost,
+  latestPost,
+  topBlogPost,
+};

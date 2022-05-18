@@ -6,10 +6,14 @@ import {
   viewBlog,
   viewBlogs,
   commentPost,
+  latestPost,
+  topBlogPost,
 } from "../controllers/blogPost";
 import protect from "../middlewares/protectRoute";
 const blogRouter = express.Router();
 
+blogRouter.get("/latest", latestPost);
+blogRouter.get("/top", topBlogPost);
 blogRouter.get("/:id", viewBlog);
 blogRouter.get("/", viewBlogs);
 blogRouter.post("/create", protect, createBlog);

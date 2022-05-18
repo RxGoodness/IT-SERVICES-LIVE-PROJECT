@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import projectDb from "../models/project";
 import asyncHandler from "express-async-handler";
 
-
 export const createProject = asyncHandler(
   async (req: Request, res: Response) => {
     try {
@@ -10,11 +9,10 @@ export const createProject = asyncHandler(
       const data = await projectDb.create({ name, overview, editor });
       res.status(201).json(data);
     } catch (error) {
-      res.status(404);
-      throw new Error("Please input right details");
+      res.status(404).json({ msg: "Please input right details" });
     }
   }
-)
+);
 
 export const deleteProject = asyncHandler(
   async (req: Request, res: Response) => {
@@ -25,11 +23,10 @@ export const deleteProject = asyncHandler(
         ? res.status(200).json({ message: "successfully deleted" })
         : res.status(404).json({ message: "Already deleted" });
     } catch (error) {
-      res.status(404);
-      throw new Error("Please input right details");
+      res.status(404).json({ msg: "Please input right details" });
     }
   }
-)
+);
 
 export const updateProject = asyncHandler(
   async (req: Request, res: Response) => {
@@ -46,12 +43,10 @@ export const updateProject = asyncHandler(
       );
       res.status(200).json({ data });
     } catch (error) {
-      res.status(404);
-      throw new Error("Please input right details");
+      res.status(404).json({ msg: "Please input right details" });
     }
   }
 )
-
 
 export const getAllProject = asyncHandler (
   async (req: Request, res: Response) => {
@@ -74,4 +69,4 @@ export const getSingleProject = asyncHandler (
       res.status(400).json({msg: "Project not found"})
     }
   }
-)
+);
