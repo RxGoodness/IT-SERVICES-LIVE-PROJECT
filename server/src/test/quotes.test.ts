@@ -2,7 +2,7 @@ import request from "supertest";
 import app from "../app";
 
 describe("Post all quotes", () => {
-  it("post all quotes", async () => {
+  it("request a quote", async () => {
     const response = await request(app).post("/quotes").send({
       projectName: "testing app",
       email: "example@gmail.com",
