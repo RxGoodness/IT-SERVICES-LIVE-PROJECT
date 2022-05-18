@@ -1,47 +1,18 @@
 import nodemailer from "nodemailer";
-/**
- ***Joi Error formatter***
-
-interface JoiError {
-  message: string;
-  path?: string[];
-  type?: string;
-  context?: Record<string, string>;
-}
-
-export const formatError = (errors: JoiError[]) => {
-  errors.map((err) => {
-    delete err.path;
-    delete err.context;
-    delete err.type;
-  });
-
-  return errors;
-};
-
-export interface FinalError {
-  original: Object;
-  details: JoiError[];
-}
-
-export const transform = (message: string) => {
-  const result = message.split(`\"`).join('');
-  return result;
-};
- */
-
 //send Email
+
+console.log(process.env.MAIL_USERNAME);
 async function sendEmail(email: any, subject: any, text: any) {
   let transport = nodemailer.createTransport({
     service: process.env.SERVICE,
     auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASS,
+      user: process.env.MAIL_USERNAME,
+      pass: process.env.MAIL_PASSWORD,
     },
   });
 
   let mailOptions = {
-    from: process.env.EMAIL,
+    from: process.env.MAIL_USERNAME,
     to: email,
     subject: subject,
     text: text,
@@ -63,5 +34,5 @@ export const validateImageFile = async (file: string) => {
   if (!file) {
     return "No image in the request";
   }
-}
+};
 export { sendEmail };
