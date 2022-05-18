@@ -9,6 +9,7 @@ const Project = new Schema(
     },
     overview: { type: String },
     editor: { type: String },
+    featuredImage: { type: String },
   },
 
   { timestamps: true }

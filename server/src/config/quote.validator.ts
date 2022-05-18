@@ -6,4 +6,8 @@ const quoteSchema = Joi.object({
   email: Joi.string().email().message("Enter valid email").required(),
 });
 
-export { quoteSchema };
+const sendQuoteSchema = Joi.object({
+  message: Joi.string().required(),
+});
+
+export { quoteSchema, sendQuoteSchema };
