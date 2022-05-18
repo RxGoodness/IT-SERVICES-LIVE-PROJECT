@@ -58,6 +58,22 @@ const deletePartnership = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json({ msg: "Deleted Successfully" })
 })
 
+const getAllPartnership = asyncHandler(async (_req: Request, res: Response) => {
+  const data = await PartnersDB.find({});
+  res.status(200).json(data);
+});
 
 
-export { requestPartnership, updatePartnership, deletePartnership };
+const getOnePartnership = asyncHandler(async (req: Request, res: Response) => {
+  
+  try {
+    const data = await PartnersDB.findOne({_id: req.params.id})
+    res.status(200).json(data);
+  } catch (error: any) {
+    throw new Error(error || "partnership not found")
+  }
+});
+
+
+
+export { requestPartnership, updatePartnership, deletePartnership, getAllPartnership, getOnePartnership };

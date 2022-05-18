@@ -10,19 +10,20 @@ import {
 } from "../controllers/jobController";
 import validateJobFields from "../middlewares/validateJob_fields";
 import validateJobUpdate from "../middlewares/validateJobUpdate";
-import uploadOptions from "../middlewares/imageUpload";
 import protect from "../middlewares/protectRoute";
 import upload from "../middlewares/process.documents";
-
+import imageUpLoad from "../config/multer"
 router.post(
   "/create",
-  uploadOptions.single("image"),
+  protect,
+  imageUpLoad.single("image"),
   validateJobFields,
   createJob
 );
 router.put(
   "/update/:id",
-  uploadOptions.single("image"),
+  protect,
+  imageUpLoad.single("image"),
   validateJobUpdate,
   updateCreatedJob
 );
