@@ -12,11 +12,12 @@ const project = Joi.object({
   editor: Joi.string().required().messages({
     editor: `should be a string`,
   }),
+  featuredImage: Joi.string(),
 });
 
 export const projectValidatior = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     await project.validateAsync(req.body, { abortEarly: false });
-    next()
+    next();
   }
-)
+);

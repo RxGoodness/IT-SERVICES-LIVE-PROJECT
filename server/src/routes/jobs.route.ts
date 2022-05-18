@@ -4,11 +4,15 @@ import {
   createJob,
   deleteCreatedJob,
   updateCreatedJob,
+  getAllJobs,
+  getJob,
+  jobApplication,
 } from "../controllers/jobController";
 import validateJobFields from "../middlewares/validateJob_fields";
 import validateJobUpdate from "../middlewares/validateJobUpdate";
 import uploadOptions from "../middlewares/imageUpload";
 import protect from "../middlewares/protectRoute";
+import upload from "../middlewares/process.documents";
 
 router.post(
   "/create",
@@ -23,5 +27,8 @@ router.put(
   updateCreatedJob
 );
 router.delete("/delete/:id", protect, deleteCreatedJob);
+router.get("/:id", getJob);
+router.get("/", getAllJobs);
+router.post("/application", upload.any(), jobApplication);
 
 export default router;
