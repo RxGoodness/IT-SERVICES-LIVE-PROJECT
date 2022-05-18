@@ -6,6 +6,6 @@ import upload from "../middlewares/process.image";
 
 router
   .route("/request")
-  .post(protect, upload.single("image"), requestPartnership);
+  .post(protect, upload.single("logo"), requestPartnership);
 
 export default router;
