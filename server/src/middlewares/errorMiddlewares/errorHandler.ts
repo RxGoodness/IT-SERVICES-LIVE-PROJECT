@@ -7,10 +7,10 @@ const errorHandlerMiddleware = (
   next: NextFunction
 ) => {
   let statusCode = err.http_code || res.statusCode || 500;
-  let msg =
-    err.message.replaceAll('"', "") || "Something went wrong, try again later";
+  if (statusCode == 200) statusCode = 500;
+  let msg = err.message ? err.message.replaceAll('"', "") : err;
 
-  if (err.message.includes("E11000")) {
+  if (err.message && err.message.includes("E11000")) {
     statusCode = 400;
     let dupKey = err.message.split("dup key: ")[1];
     msg = `${dupKey} field has to be unique`.replaceAll('"', "");
@@ -20,7 +20,7 @@ const errorHandlerMiddleware = (
     statusCode = 400;
     msg = Object.values(err.details)
       .map((item: any) => item.message.replaceAll('"', ""))
-      .join("");
+      .join(" ");
   }
 
   res.status(statusCode).json({ msg });
