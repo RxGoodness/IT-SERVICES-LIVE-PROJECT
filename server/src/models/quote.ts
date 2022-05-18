@@ -15,6 +15,4 @@ const quoteSchema = new Schema({
   },
 });
 
-//
-
 export const Quote = model("Quote", quoteSchema);
