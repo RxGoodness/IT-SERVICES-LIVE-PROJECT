@@ -7,7 +7,7 @@ import { updatePartnershipValidator } from '../middlewares/validatePatnershipUpd
 
 router
   .route("/request")
-  .post(protect, upload.single("image"), requestPartnership);
+  .post(protect, upload.single("logo"), requestPartnership);
 
 router.route("/updateRequest/:id")
   .patch(updatePartnershipValidator, protect, updatePartnership)
