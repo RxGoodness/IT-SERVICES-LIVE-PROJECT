@@ -6,6 +6,7 @@ import {
   changePasswordValidator,
 } from "../config/admin.validator";
 import Admin from "../models/admin.schema";
+import Activity from "../models/activity";
 
 const changePassword = asyncHandler(async (req: Request, res: Response) => {
   const data: changePasswordType = req.body;
@@ -27,12 +28,23 @@ const changePassword = asyncHandler(async (req: Request, res: Response) => {
     if (validateCurrentPassword && newPassword === confirmNewPassword) {
       const salt = await bcrypt.genSalt(10);
       const hashedNewPassword = await bcrypt.hash(newPassword, salt);
-      await Admin.findOneAndUpdate(
+    const adminPasswordChange = await Admin.findOneAndUpdate(
         { email: admin!.email },
         { $set: { password: hashedNewPassword } },
         { new: true }
       );
 
+      //RECORD ACTIVITY
+      const newActivity = new Activity(
+        {
+        message: `Admin changed password succesfully`,
+        author: 'Admin',
+        authorActivityTitleOrName: adminPasswordChange.firstName,
+        authorActivityID:adminPasswordChange._id
+        }
+       )
+     const savedActivity = await newActivity.save();
+    
       res.status(200).json("Password changed successfully");
     }
   } catch (error) {

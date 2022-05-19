@@ -2,12 +2,28 @@ import { Post } from "../models/blogModel";
 import { Request, Response } from "express";
 import { createSchema, editSchema, commentSchema } from "../config/blogSchema";
 import asyncHandler from "express-async-handler";
+import Activity from "../models/activity";
+
 
 //CREATE POST
 const createBlog = asyncHandler(async (req: Request, res: Response) => {
   await createSchema.validateAsync(req.body);
   const newPost = new Post(req.body);
   const savedPost = await newPost.save();
+
+  //RECORD ACTIVITY
+  const newActivity = new Activity(
+    {
+    message: `A blog post was created succesfully`,
+    author: 'Admin',
+    authorActivityTitleOrName: savedPost.title,
+    authorActivityID:savedPost._id
+    }
+   )
+
+ const savedActivity = await newActivity.save();
+
+
   res.status(200).json(savedPost);
 });
 
@@ -24,6 +40,19 @@ const editBlog = asyncHandler(async (req: Request, res: Response) => {
       },
       { new: true }
     );
+
+//RECORD ACTIVITY
+const newActivity = new Activity(
+  {
+  message: `A blog post was updated succesfully`,
+  author: 'Admin',
+  authorActivityTitleOrName: updatedPost.title,
+  authorActivityID:updatedPost._id
+  }
+ )
+const savedActivity = await newActivity.save();
+
+
     res.status(200).json(updatedPost);
   } else {
     res.status(401).json("You can update only your post!");
@@ -36,6 +65,19 @@ const deleteBlog = asyncHandler(async (req: Request, res: Response) => {
     const post = await Post.findById(req.params.id);
     if (post) {
       try {
+
+        //RECORD ACTIVITY
+        const newActivity = new Activity(
+          {
+          message: `A blog post was deleted succesfully`,
+          author: 'Admin',
+          authorActivityTitleOrName: post.title,
+          authorActivityID: post._id
+          }
+         ) 
+       const savedActivity = await newActivity.save();
+      
+
         await post.delete();
         res.status(200).json("Post has been deleted...");
       } catch (err) {
@@ -53,6 +95,18 @@ const deleteBlog = asyncHandler(async (req: Request, res: Response) => {
 const viewBlog = asyncHandler(async (req: Request, res: Response) => {
   try {
     const post = await Post.findById(req.params.id);
+
+//RECORD ACTIVITY
+const newActivity = new Activity(
+  {
+  message: `A blog post was viewed succesfully`,
+  authorActivityTitleOrName: post.title,
+  authorActivityID: post._id
+  }
+ ) 
+const savedActivity = await newActivity.save();
+
+
     res.status(200).json(post);
   } catch (err) {
     res.status(500).json("Error getting BlogPost");
@@ -76,6 +130,16 @@ const viewBlogs = asyncHandler(async (req: Request, res: Response) => {
     } else {
       posts = await Post.find();
     }
+
+//RECORD ACTIVITY
+const newActivity = new Activity(
+  {
+  message: `All blog posts were viewed succesfully`,
+   }
+ ) 
+const savedActivity = await newActivity.save();
+
+
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).json(err);
@@ -104,6 +168,16 @@ const commentPost = asyncHandler(async (req: Request, res: Response) => {
     );
     console.log(post);
 
+    //RECORD ACTIVITY
+    const newActivity = new Activity(
+      {
+      message: `A comment was made on a blog post was succesfully`,
+      authorActivityTitleOrName: post.title,
+      authorActivityID: post._id
+      }
+     ) 
+   const savedActivity = await newActivity.save();
+
     res.status(200).json(commentedPost);
   } else {
     res.status(401).json("error commenting on post");
@@ -112,11 +186,29 @@ const commentPost = asyncHandler(async (req: Request, res: Response) => {
 
 const latestPost = asyncHandler(async (req: Request, res: Response) => {
   const latest = await Post.find().sort({ createdAt: -1 }).limit(6);
+
+//RECORD ACTIVITY
+const newActivity = new Activity(
+  {
+  message: `The latest blogpost was viewed succesfully`,
+   }
+ ) 
+const savedActivity = await newActivity.save();
+
   res.status(200).json(latest);
 });
 
 const topBlogPost = asyncHandler(async (req: Request, res: Response) => {
   const topPost = await Post.find().sort({ comments: -1 }).limit(6);
+
+  //RECORD ACTIVITY
+const newActivity = new Activity(
+  {
+  message: `The latest blogpost was viewed succesfully`,
+   }
+ ) 
+const savedActivity = await newActivity.save();
+
   res.status(200).json(topPost);
 });
 

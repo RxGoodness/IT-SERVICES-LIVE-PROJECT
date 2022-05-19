@@ -9,6 +9,8 @@ import {
   AdminType,
   LoginType,
 } from "../config/admin.validator";
+import Activity from "../models/activity";
+
 
 const createAdmin = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
@@ -20,8 +22,21 @@ const createAdmin = asyncHandler(
     const { confirmPassword, email, ...data } = body;
     const securedPass = await bcrypt.hash(confirmPassword, 10);
     //create data to the database with the hashed password
-    await AdminDB.create({ ...data, email, password: securedPass });
+    const admin = await AdminDB.create({ ...data, email, password: securedPass });
     const token = genToken({ email });
+
+  //RECORD ACTIVITY
+  const newActivity = new Activity(
+    {
+    message: `An admin was created succesfully`,
+    author: 'Admin',
+    authorActivityTitleOrName: admin.firstName,
+    authorActivityID:admin._id
+    }
+   )
+ const savedActivity = await newActivity.save();
+
+
     return res.status(200).json({ token });
   }
 );
@@ -34,6 +49,19 @@ const loginAdmin = asyncHandler(
     const admin = await AdminDB.findOne({ email });
     if (admin && (await bcrypt.compare(password, admin.password))) {
       const token = genToken({ email });
+
+//RECORD ACTIVITY
+const newActivity = new Activity(
+  {
+  message: `Admin logged in succesfully`,
+  author: 'Admin',
+  authorActivityTitleOrName: admin.firstName,
+  authorActivityID:admin._id
+  }
+ )  
+const savedActivity = await newActivity.save();
+
+
       return res.status(200).json({ token });
     } else {
       res.status(401).json({ msg: "Invalid credentials" });

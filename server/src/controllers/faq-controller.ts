@@ -1,18 +1,27 @@
 import { Request, Response } from "express";
 import faqModel from "../models/faq-models";
 import asyncHandler from "express-async-handler";
-
 import Joi from "joi";
+import Activity from "../models/activity";
 
 export const allFaqs = async (_req: Request, res: Response) => {
   let allFaqs = await faqModel.find({});
+
+//RECORD ACTIVITY
+const newActivity = new Activity(
+  {
+  message: ` FAQs and answers were viewed succesfully`}
+ )
+const savedActivity = await newActivity.save();
+
+
   res.status(200).json(allFaqs);
 };
 
 const schema = Joi.object({
   questions: Joi.string().min(10).required(),
   answers: Joi.string(),
-  isAnswered: Joi.boolean().default(false),
+  isAnswered: Joi.boolean().default(true),
 });
 
 export const createFaqs = asyncHandler(async (req: Request, res: Response) => {
@@ -26,7 +35,16 @@ export const createFaqs = asyncHandler(async (req: Request, res: Response) => {
       answers,
     });
 
-    await newEntry.save();
+    const faQuestion = await newEntry.save()
+
+    //RECORD ACTIVITY
+    const newActivity = new Activity(
+      {
+      message: `A FAQ question and answer was posted succesfully`,
+      author: 'Admin',
+      authorActivityID:faQuestion._id
+      })
+   const savedActivity = await newActivity.save();
 
     res.status(201).json({ newEntry });
   } catch (error) {
