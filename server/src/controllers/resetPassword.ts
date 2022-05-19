@@ -6,6 +6,7 @@ import { resetPasswordSchema } from "../config/resetPasswordJoiSchema";
 import jwt from "jsonwebtoken";
 import Joi from "joi";
 import bcrypt from "bcryptjs";
+import Activity from "../models/activity";
 
 const enterEmail = asyncHandler(async (req: Request, res: Response) => {
   //validate the input from postman
@@ -27,6 +28,17 @@ const enterEmail = asyncHandler(async (req: Request, res: Response) => {
 
   const link = `${process.env.BASE_URL}/reset-password/${user._id}/${webToken}`;
   await sendEmail(user.email, "Password Reset", link);
+
+//RECORD ACTIVITY
+const newActivity = new Activity(
+  {
+  message: `A password reset link was sent to an email succesfully`,
+  author:'Admin',
+  authorActivityTitleOrName: user.email
+  }
+ ) 
+const savedActivity = await newActivity.save();
+
 
   res
     .status(200)
@@ -57,6 +69,18 @@ const resetPassword = asyncHandler(async (req: Request, res: Response) => {
 
   user.password = hashedPassword;
   await user.save();
+
+//RECORD ACTIVITY
+const newActivity = new Activity(
+  {
+  message: `A password reset was done succesfully`,
+  author:'Admin',
+  authorActivityTitleOrName: user.email
+  }
+ ) 
+const savedActivity = await newActivity.save();
+
+
   res.status(200).json({ msg: user });
 });
 

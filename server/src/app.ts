@@ -15,6 +15,7 @@ import partnership from "./routes/partnership.route";
 import editViewRouter from "./routes/editViewUser";
 import resetPasswordRoute from "./routes/resetPassword";
 import notificationRoute from "./routes/notification.route";
+import activityRouter from "./routes/activityRouter";
 
 // Error handlers
 import notFound from "./middlewares/errorMiddlewares/notFound";
@@ -41,6 +42,7 @@ app.use("/services", serviceRoute);
 app.use("/profile", editViewRouter);
 app.use("/partnership", partnership);
 app.use("/reset-password", resetPasswordRoute);
+app.use("/activity", activityRouter)
 
 
 // Error handlers

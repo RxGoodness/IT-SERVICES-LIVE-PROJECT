@@ -3,6 +3,7 @@ import asyncHandler from "express-async-handler";
 import { sendEmail } from "../utils";
 import { quoteSchema, sendQuoteSchema } from "../config/quote.validator";
 import { Quote } from "../models/quote";
+import Activity from "../models/activity";
 
 export const requestQuote = asyncHandler(
   async (req: Request, res: Response) => {
@@ -24,7 +25,20 @@ export const requestQuote = asyncHandler(
       email: email,
     });
 
-    await newQuote.save();
+   const theQuote = await newQuote.save();
+
+
+     //RECORD ACTIVITY
+     const newActivity = new Activity(
+      {
+      message: `A quote was requested succesfully`,
+      author: 'Admin',
+      authorActivityTitleOrName: theQuote.projectName,
+    authorActivityID:theQuote._id
+      }
+     ) 
+   const savedActivity = await newActivity.save();
+  
     res
       .status(201)
       .json({ msg: "Quote request successful", summary: newQuote.summary });
@@ -42,6 +56,19 @@ export const sendQuote = asyncHandler(async (req: Request, res: Response) => {
   await sendQuoteSchema.validateAsync(req.body);
 
   await sendEmail(quote.email, "Project Quote", req.body.message);
+
+//RECORD ACTIVITY
+const newActivity = new Activity(
+  {
+  message: `A quote was sent succesfully`,
+  author: 'Admin',
+  authorActivityTitleOrName: quote.projectName,
+authorActivityID:quote._id
+  }
+ ) 
+const savedActivity = await newActivity.save();
+
+
   res.status(201).json({ msg: "quotes sent successfully" });
   console.log(quote);
 });
@@ -49,6 +76,15 @@ export const sendQuote = asyncHandler(async (req: Request, res: Response) => {
 export const getAllQuotes = asyncHandler(
   async (_req: Request, res: Response) => {
     const quotes = await Quote.find({});
+
+    //RECORD ACTIVITY
+const newActivity = new Activity(
+  {
+  message: `All quotes were viewed succesfully`,
+   }
+ ) 
+const savedActivity = await newActivity.save();
+
 
     res.json({ data: quotes });
   },
