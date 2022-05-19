@@ -45,3 +45,11 @@ export const sendQuote = asyncHandler(async (req: Request, res: Response) => {
   res.status(201).json({ msg: "quotes sent successfully" });
   console.log(quote);
 });
+
+export const getAllQuotes = asyncHandler(
+  async (_req: Request, res: Response) => {
+    const quotes = await Quote.find({});
+
+    res.json({ data: quotes });
+  },
+);
