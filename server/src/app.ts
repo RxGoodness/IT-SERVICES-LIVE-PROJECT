@@ -15,7 +15,7 @@ import partnership from "./routes/partnership.route";
 import editViewRouter from "./routes/editViewUser";
 import resetPasswordRoute from "./routes/resetPassword";
 import notificationRoute from "./routes/notification.route";
-import activityRouter from "./routes/activityRouter";
+import activityRouter from "./routes/activityRoute";
 
 // Error handlers
 import notFound from "./middlewares/errorMiddlewares/notFound";
